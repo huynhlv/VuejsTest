@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <CampaignManagement/>
+    <Login/>
   </div>
 </template>
 
 <script>
-import CampaignManagement from './components/CampaignManagement'
+import Login from './components/Authen/Login.vue'
 
 export default {
   name: 'App',
   components: {
-    CampaignManagement
+    Login
   }
 }
 </script>
+
+<style lang="scss" src="./assets/style.scss"></style>
