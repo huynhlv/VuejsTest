@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     login() {
-      this.$http.post('https://sherpa-api-huynhlv.herokuapp.com/api/sessions', this.user).then(response => {
+      this.$http.post('sessions', this.user).then(response => {
         console.log(response);
       }, error => {
         console.log(error.body);
