@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import VueLoading from 'vuejs-loading-plugin'
 import App from './App'
 import { routes } from './routes.js'
+import { store } from './store/store.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -23,5 +24,6 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

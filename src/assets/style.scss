@@ -13,3 +13,23 @@ html, body {
 .fs-12 {
   font-size: 12px;
 }
+
+.w-6 {
+  width: 6%;
+}
+
+.wpx-45 {
+  width: 45px;
+}
+
+.w-image {
+  width: 100px;
+}
+
+.link-a {
+  color: #5cbad6;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
