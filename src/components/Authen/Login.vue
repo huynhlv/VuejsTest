@@ -34,7 +34,7 @@ export default {
       this.$http.post('sessions', this.user).then(response => {
         this.$loading(false)
         console.log(response.body)
-        this.$router.push('/campaign-management')
+        this.$router.push('/dashboard')
       }, error => {
         this.$loading(false)
         this.msgErrors = error.body.errors
