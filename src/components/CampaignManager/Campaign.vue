@@ -1,6 +1,6 @@
 <template>
   <div class="fs-13">
-    <b-table small bordered responsive :items="items" :fields="fields">
+    <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
       <template slot="status" slot-scope="data" >
         <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
         <b-form-checkbox v-else switch disabled></b-form-checkbox>

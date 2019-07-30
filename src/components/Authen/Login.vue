@@ -13,7 +13,7 @@
         <label class="font-weight-bold">Password</label>
         <input v-model="user.password" type="password" class="form-control fs-13" placeholder="Password">
       </div>
-      <button @click="login" class="btn btn-primary fs-12 w-100">Log in</button>
+      <button @click="login" class="btn btn-primary fs-13 w-100">Log in</button>
     </div>
   </div>
 </template>
