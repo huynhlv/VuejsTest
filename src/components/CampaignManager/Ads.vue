@@ -1,27 +1,84 @@
 <template>
-  <div class="fs-13">
-    <b-table class="my-table" small bordered responsive :items="this.$store.state.dashBoard.data.ads" :fields="fields">
-      <template slot="status" slot-scope="data" >
-        <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
-        <b-form-checkbox v-else switch disabled></b-form-checkbox>
-      </template>
-      <template slot="image" slot-scope="data" >
-        <VueLoadImage>
-          <img slot="image" class="w-image" :src="data.value"/>
-          <img slot="preloader" src="http://www.wellcommshop.com/image/data/loading.gif" />
-        </VueLoadImage>
-      </template>
-    </b-table>
+  <div>
+    <b-tab title="Campaign" @click="backCampaign"></b-tab>
+    <b-tab title="AdGroups" @click="backAdGroups"></b-tab>
+    <b-tab title="Ads" active>
+      <b-card-text>
+        <div class="fs-13">
+          <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+            <template slot="status" slot-scope="data" >
+              <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
+              <b-form-checkbox v-else switch disabled></b-form-checkbox>
+            </template>
+            <template slot="image" slot-scope="data" >
+              <VueLoadImage>
+                <img slot="image" class="w-image" :src="data.value"/>
+                <img slot="preloader" src="http://www.wellcommshop.com/image/data/loading.gif" />
+              </VueLoadImage>
+            </template>
+          </b-table>
+        </div>
+      </b-card-text>
+    </b-tab>
   </div>
 </template>
 <script>
 import VueLoadImage from 'vue-load-image'
 export default {
+  methods: {
+    backCampaign() {
+      this.$router.push('/campaign-manager')
+    },
+    backAdGroups() {
+      this.$router.push('/campaign-manager/' + this.$route.params.idcampaign)
+    }
+  },
   components: {
     VueLoadImage
   },
   data() {
     return {
+      items: [
+        {
+            "id": 18,
+            "ag_id": 19,
+            "status": 0,
+            "ad_name": "Sherman Zulauf DVM",
+            "image": "https:\/\/lorempixel.com\/1080\/480\/?34638",
+            "delivery_status": "Prof. Gisselle Anderson DVM",
+            "spent": 972793,
+            "click": 526,
+            "impression": "Thaddeus Haag",
+            "ctr": 707,
+            "cpc": 15
+        },
+        {
+            "id": 49,
+            "ag_id": 19,
+            "status": 0,
+            "ad_name": "Mr. Doug Muller Sr.",
+            "image": "https:\/\/lorempixel.com\/1080\/480\/?95650",
+            "delivery_status": "Elenora Wilkinson",
+            "spent": 348803,
+            "click": 287,
+            "impression": "Dr. Carson Bauch",
+            "ctr": 183,
+            "cpc": 452
+        },
+        {
+            "id": 97,
+            "ag_id": 19,
+            "status": 0,
+            "ad_name": "Dr. Demetrius Moore",
+            "image": "https:\/\/lorempixel.com\/1080\/480\/?66588",
+            "delivery_status": "Malika Blick",
+            "spent": 886854,
+            "click": 175,
+            "impression": "Savannah Konopelski",
+            "ctr": 980,
+            "cpc": 546
+        }
+    ],
       fields: [
         {
           key: 'status',

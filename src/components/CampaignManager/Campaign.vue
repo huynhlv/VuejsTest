@@ -1,25 +1,25 @@
 <template>
-  <div class="fs-13">
-    <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
-      <template slot="status" slot-scope="data" >
-        <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
-        <b-form-checkbox v-else switch disabled></b-form-checkbox>
-      </template>
-      <template slot="name" slot-scope="data" >
-        <span class="link-a" @click="adGroups(data.item.adgroups)">{{ data.value }}</span>
-      </template>
-    </b-table>
-  </div>
+  <b-tab title="Campaign" active>
+    <b-card-text>
+      <div class="fs-13">
+        <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+          <template slot="status" slot-scope="data" >
+            <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
+            <b-form-checkbox v-else switch disabled></b-form-checkbox>
+          </template>
+          <template slot="name" slot-scope="data" >
+            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.id }" class="link-a">
+              {{ data.value }}
+            </router-link>
+          </template>
+        </b-table>
+      </div>
+    </b-card-text>
+  </b-tab>
 </template>
 
 <script>
 export default {
-  methods: {
-    adGroups(items) {
-      this.$store.state.dashBoard.status.adgroups = true;
-      this.$store.state.dashBoard.data.adgroups = items;
-    }
-  },
   data() {
     return {
       fields: [

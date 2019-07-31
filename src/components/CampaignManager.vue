@@ -16,43 +16,9 @@
     <div class="mx-5">
       <b-card no-body>
         <b-tabs card small>
-          <b-tab title="Campaign" active @click="backCampaign">
-            <b-card-text><Campaign /></b-card-text>
-          </b-tab>
-          <b-tab v-if="dashBoardStatus.adgroups" active title="Ad Group" @click="backAdGroups">
-            <b-card-text><AdGroup /></b-card-text>
-          </b-tab>
-          <b-tab v-if="dashBoardStatus.ads" active title="Ads">
-            <b-card-text><Ads /></b-card-text>
-          </b-tab>
+          <router-view />
         </b-tabs>
       </b-card>
     </div>
   </div>
 </template>
-<script>
-import Campaign from './CampaignManager/Campaign'
-import AdGroup from './CampaignManager/AdGroup'
-import Ads from './CampaignManager/Ads'
-export default {
-  methods: {
-    backCampaign() {
-      this.$store.state.dashBoard.status.adgroups = false
-      this.$store.state.dashBoard.status.ads = false
-    },
-    backAdGroups() {
-      this.$store.state.dashBoard.status.ads = false
-    }
-  },
-  computed: {
-    dashBoardStatus() {
-      return this.$store.state.dashBoard.status
-    }
-  },
-  components: {
-    Campaign,
-    AdGroup,
-    Ads
-  }
-}
-</script>

@@ -1,26 +1,66 @@
 <template>
-  <div class="fs-13">
-    <b-table class="my-table" small bordered responsive :items="this.$store.state.dashBoard.data.adgroups" :fields="fields">
-      <template slot="status" slot-scope="data" >
-        <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
-        <b-form-checkbox v-else switch disabled></b-form-checkbox>
-      </template>
-      <template slot="ag_name" slot-scope="data" >
-        <span class="link-a" @click="agName(data.item.adses)">{{ data.value }}</span>
-      </template>
-    </b-table>
+  <div>
+    <b-tab title="Campaign" @click="backCampaign"></b-tab>
+    <b-tab title="AdGroups" active>
+      <b-card-text>
+        <div class="fs-13">
+          <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+            <template slot="status" slot-scope="data" >
+              <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
+              <b-form-checkbox v-else switch disabled></b-form-checkbox>
+            </template>
+            <template slot="ag_name" slot-scope="data" >
+              <router-link tag="span" :to="{ path: $route.params.idcampaign + '/' + data.item.id }" class="link-a">
+                {{ data.value }}
+              </router-link>
+            </template>
+          </b-table>
+        </div>
+      </b-card-text>
+    </b-tab>
   </div>
 </template>
 <script>
 export default {
   methods: {
-    agName(items) {
-      this.$store.state.dashBoard.status.ads = true;
-      this.$store.state.dashBoard.data.ads = items;
+    backCampaign() {
+      this.$router.push('/campaign-manager')
     }
   },
   data() {
     return {
+      items: [
+        {
+          "id": 19,
+          "campaign_id": 1,
+          "status": 0,
+          "ag_name": "Miss Jacinthe Hill MD",
+          "delivery_status": "Zula Raynor I",
+          "spent": 37989,
+          "click": 446,
+          "impression": "Joyce Lueilwitz",
+          "ctr": 183,
+          "cpc": 72,
+          "daily_budget": 957557,
+          "bid": "9098",
+          "bid_amount": 797
+        },
+        {
+          "id": 5,
+          "campaign_id": 3,
+          "status": 1,
+          "ag_name": "Bonita Champlin",
+          "delivery_status": "Anabelle Ondricka PhD",
+          "spent": 63156,
+          "click": 756,
+          "impression": "Josue Kemmer",
+          "ctr": 352,
+          "cpc": 166,
+          "daily_budget": 325910,
+          "bid": "5774",
+          "bid_amount": 762
+        }
+      ],
       fields: [
         {
           key: 'status',

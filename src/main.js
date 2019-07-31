@@ -17,7 +17,6 @@ Vue.use(VueRouter)
 Vue.use(VueLoading)
 /* eslint-disable no-new */
 const router = new VueRouter({
-  mode: 'history',
   routes
 })
 
