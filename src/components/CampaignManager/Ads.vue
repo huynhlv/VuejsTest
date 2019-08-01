@@ -11,10 +11,25 @@
               <b-form-checkbox v-else switch disabled></b-form-checkbox>
             </template>
             <template slot="image" slot-scope="data" >
-              <VueLoadImage>
-                <img slot="image" class="w-image" :src="data.value"/>
-                <img slot="preloader" src="http://www.wellcommshop.com/image/data/loading.gif" />
-              </VueLoadImage>
+              <span v-if="data.item.type_preview == '0'">
+                <VueLoadImage :id="'popover' + data.item.id">
+                  <img slot="image" class="w-image" :src="data.value"/>
+                  <img slot="preloader" src="http://www.wellcommshop.com/image/data/loading.gif" />
+                </VueLoadImage>
+                <b-popover :target="'popover'+ data.item.id" triggers="click">
+                  <img class="w-image-zoom" :src="data.value"/>
+                </b-popover>
+              </span>
+              <span v-else>
+                <video class="w-image" controls :id="'popover' + data.item.id">
+                  <source :src="data.value" type="video/mp4">
+                </video>
+                <b-popover :target="'popover'+ data.item.id" triggers="click">
+                  <video class="w-image-zoom" controls :id="'popover' + data.item.id">
+                    <source :src="data.value" type="video/mp4">
+                  </video>
+                </b-popover>
+              </span>
             </template>
           </b-table>
         </div>
@@ -43,8 +58,9 @@ export default {
             "id": 18,
             "ag_id": 19,
             "status": 0,
+            "type_preview": 1,
             "ad_name": "Sherman Zulauf DVM",
-            "image": "https:\/\/lorempixel.com\/1080\/480\/?34638",
+            "image": "https://www.w3schools.com/tags/movie.mp4",
             "delivery_status": "Prof. Gisselle Anderson DVM",
             "spent": 972793,
             "click": 526,
@@ -56,8 +72,9 @@ export default {
             "id": 49,
             "ag_id": 19,
             "status": 0,
+            "type_preview": 0,
             "ad_name": "Mr. Doug Muller Sr.",
-            "image": "https:\/\/lorempixel.com\/1080\/480\/?95650",
+            "image": "https://vevietnamairline.com/Img.ashx?636547984689865774.jpg",
             "delivery_status": "Elenora Wilkinson",
             "spent": 348803,
             "click": 287,
@@ -69,8 +86,9 @@ export default {
             "id": 97,
             "ag_id": 19,
             "status": 0,
+            "type_preview": 0,
             "ad_name": "Dr. Demetrius Moore",
-            "image": "https:\/\/lorempixel.com\/1080\/480\/?66588",
+            "image": "https://vietjet.net/includes/uploads/2016/01/thang-tu-ve-thien-nhien-quyen-ru-dieu-ky2.jpg",
             "delivery_status": "Malika Blick",
             "spent": 886854,
             "click": 175,
