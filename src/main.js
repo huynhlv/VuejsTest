@@ -8,6 +8,8 @@ import { routes } from './routes.js'
 import { store } from './store/store.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueClazyLoad from 'vue-clazy-load'
+Vue.use(VueClazyLoad)
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)

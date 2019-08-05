@@ -12,20 +12,29 @@
             </template>
             <template slot="image" slot-scope="data" >
               <span v-if="data.item.type_preview == '0'">
-                <VueLoadImage :id="'popover' + data.item.id">
-                  <img slot="image" class="w-image" :src="data.value"/>
-                  <img slot="preloader" src="http://www.wellcommshop.com/image/data/loading.gif" />
-                </VueLoadImage>
-                <b-popover :target="'popover'+ data.item.id" triggers="click">
+                <clazy-load :src="data.value" :id="'popover' + data.item.id">
+                  <img class="w-image" :src="data.value">
+                  <div class="preloader" slot="placeholder">
+                    <img class="w-image" src="http://www.wellcommshop.com/image/data/loading.gif">
+                  </div>
+                </clazy-load>
+                <b-popover :target="'popover'+ data.item.id" triggers="click blur">
                   <img class="w-image-zoom" :src="data.value"/>
                 </b-popover>
               </span>
               <span v-else>
-                <video class="w-image" controls :id="'popover' + data.item.id">
-                  <source :src="data.value" type="video/mp4">
-                </video>
-                <b-popover :target="'popover'+ data.item.id" triggers="click">
-                  <video class="w-image-zoom" controls :id="'popover' + data.item.id">
+                <div class="video">
+                  <div :id="'popover' + data.item.id">
+                    <video class="w-image" :id="'video' + data.item.id">
+                      <source :src="data.value" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="icon-play" id="icon-play">
+                    <i :title="'Play Video'" class="far fa-play-circle play-video" @click="playVideo('video' + data.item.id)"></i>
+                  </div>
+                </div>
+                <b-popover :target="'popover'+ data.item.id" triggers="focus click">
+                  <video class="w-image-zoom" controls autoplay :id="'popover' + data.item.id">
                     <source :src="data.value" type="video/mp4">
                   </video>
                 </b-popover>
@@ -38,9 +47,20 @@
   </div>
 </template>
 <script>
-import VueLoadImage from 'vue-load-image'
+import { VueClazyLoad } from 'vue-clazy-load'
 export default {
   methods: {
+    playVideo(id) {
+      var myVideo = document.getElementById(id);
+      var icon = document.getElementById('icon-play');
+      if (myVideo.paused){
+        myVideo.play();
+        icon.style.display = 'none';
+      }
+      else {
+        myVideo.pause();
+      }
+    },
     backCampaign() {
       this.$router.push('/campaign-manager')
     },
@@ -49,7 +69,7 @@ export default {
     }
   },
   components: {
-    VueLoadImage
+    VueClazyLoad
   },
   data() {
     return {
@@ -60,7 +80,7 @@ export default {
             "status": 0,
             "type_preview": 1,
             "ad_name": "Sherman Zulauf DVM",
-            "image": "https://www.w3schools.com/tags/movie.mp4",
+            "image": "https://www.w3schools.com/html/mov_bbb.mp4",
             "delivery_status": "Prof. Gisselle Anderson DVM",
             "spent": 972793,
             "click": 526,

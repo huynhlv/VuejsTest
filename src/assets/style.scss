@@ -32,7 +32,7 @@ html, body {
 }
 
 .link-a {
-  color: #5cbad6;
+  color: #1f85fb;
   &:hover {
     text-decoration: underline;
     cursor: pointer;
@@ -43,3 +43,20 @@ html, body {
   max-height: 400px;
   overflow-y: auto;
 }
+
+.video {
+  position: relative;
+  .icon-play {
+    position: absolute;
+    top: 20%;
+    left: 24%;
+    .play-video {
+      font-size: 30px;
+      cursor: pointer;
+      &:hover {
+        color: #1f85fb;
+      }
+    }
+  }
+}
+
