@@ -7,8 +7,8 @@
         <div class="fs-13">
           <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
             <template slot="status" slot-scope="data" >
-              <b-form-checkbox v-if="data.value == '1'" checked='true' switch disabled></b-form-checkbox>
-              <b-form-checkbox v-else switch disabled></b-form-checkbox>
+              <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
+              <b-form-checkbox v-else switch></b-form-checkbox>
             </template>
             <template slot="image" slot-scope="data" >
               <span v-if="data.item.type_preview == '0'">
