@@ -13,27 +13,31 @@
             <template slot="image" slot-scope="data" >
               <span v-if="data.item.type_preview == '0'">
                 <clazy-load :src="data.value" :id="'popover' + data.item.id">
-                  <img class="w-image" :src="data.value">
+                  <button class="b-none">
+                    <img class="w-image" :src="data.value">
+                  </button>
                   <div class="preloader" slot="placeholder">
                     <img class="w-image" src="http://www.wellcommshop.com/image/data/loading.gif">
                   </div>
                 </clazy-load>
-                <b-popover :target="'popover'+ data.item.id" triggers="click blur">
+                <b-popover :target="'popover'+ data.item.id" :title="'ID Ad: ' + data.item.id" triggers="focus">
                   <img class="w-image-zoom" :src="data.value"/>
                 </b-popover>
               </span>
               <span v-else>
                 <div class="video">
                   <div :id="'popover' + data.item.id">
-                    <video class="w-image" :id="'video' + data.item.id">
-                      <source :src="data.value" type="video/mp4">
-                    </video>
+                    <button class="b-none">
+                      <video class="w-image" :id="'video' + data.item.id">
+                        <source :src="data.value" type="video/mp4">
+                      </video>
+                    </button>
                   </div>
                   <div class="icon-play" id="icon-play">
                     <i :title="'Play Video'" class="far fa-play-circle play-video" @click="playVideo('video' + data.item.id)"></i>
                   </div>
                 </div>
-                <b-popover :target="'popover'+ data.item.id" triggers="focus click">
+                <b-popover :target="'popover'+ data.item.id" :title="'ID Ad: ' + data.item.id" triggers="focus">
                   <video class="w-image-zoom" controls autoplay :id="'popover' + data.item.id">
                     <source :src="data.value" type="video/mp4">
                   </video>

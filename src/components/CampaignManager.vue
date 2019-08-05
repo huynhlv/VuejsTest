@@ -13,6 +13,7 @@
       </b-nav>
     </div>
     <h2 class="text-center">Campaign Manager</h2>
+    <Chart :options="chartOptions" />
     <div class="mx-5">
       <b-card no-body>
         <b-tabs card small>
@@ -22,3 +23,28 @@
     </div>
   </div>
 </template>
+<script>
+import {Chart} from 'highcharts-vue'
+export default {
+  components: {
+    Chart
+  },
+  data() {
+    return {
+      chartOptions: {
+        chart: {
+          type: 'spline'
+        },
+        title: {
+          text: 'Sin chart'
+        },
+        series: [{
+          data: [10, 0, 8, 2, 6, 4, 5, 5],
+          color: '#6fcd98'
+        }]
+      },
+    }
+  }
+}
+</script>
+
