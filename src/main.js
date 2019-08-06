@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueClazyLoad from 'vue-clazy-load'
 Vue.use(VueClazyLoad)
+import VueSession from 'vue-session'
+Vue.use(VueSession)
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)

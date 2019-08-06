@@ -32,9 +32,13 @@ export default {
     login() {
       this.$loading(true)
       this.$http.post('sessions', this.user).then(response => {
-        this.$loading(false)
-        console.log(response.body)
-        this.$router.push('/campaign-manager')
+        if(response.status === 200 && 'auth_token' in response.body) {
+          this.$loading(false)
+          this.$router.push('/campaign-manager')
+          this.$session.start()
+          this.$session.set('auth_token', response.body.auth_token)
+          Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.auth_token
+        }
       }, error => {
         this.$loading(false)
         this.msgErrors = error.body.errors

@@ -8,7 +8,7 @@
           toggle-class="nav-link-custom"
           right
         >
-          <b-dropdown-item class="fs-12">Logout</b-dropdown-item>
+          <b-dropdown-item class="fs-12" @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-nav>
     </div>
@@ -28,6 +28,17 @@ import {Chart} from 'highcharts-vue'
 export default {
   components: {
     Chart
+  },
+  beforeCreate() {
+    if(!this.$session.exists()) {
+      this.$router.push('/')
+    }
+  },
+  methods: {
+    logout() {
+      this.$session.destroy()
+      this.$router.push('/')
+    }
   },
   data() {
     return {
