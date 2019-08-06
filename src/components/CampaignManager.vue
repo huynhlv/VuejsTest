@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div class="m-2 d-flex">
-      <img class="w-6 m-auto" src="https://dactech.vn/wp-content/uploads/2019/03/logo-300x200.png">
-      <b-nav class="fs-12 my-auto">
+    <sidebar-menu :menu="menu" />
+    <div>
+      <div class="m-2">
+        <img class="w-6 m-auto d-block" src="https://dactech.vn/wp-content/uploads/2019/03/logo-300x200.png" />
+        <h2 class="text-center">Campaign Manager</h2>
+      </div>
+      <b-nav class="fs-12 my-auto nav-left">
         <b-nav-item-dropdown
           text="Admin"
           toggle-class="nav-link-custom"
@@ -12,7 +16,6 @@
         </b-nav-item-dropdown>
       </b-nav>
     </div>
-    <h2 class="text-center">Campaign Manager</h2>
     <Chart :options="chartOptions" />
     <div class="mx-5">
       <b-card no-body>
@@ -42,6 +45,29 @@ export default {
   },
   data() {
     return {
+      menu: [
+        {
+          header: true,
+          title: 'Main Navigation',
+          hiddenOnCollapse: true
+        },
+        {
+          href: '/',
+          title: 'Dashboard',
+          icon: 'fa fa-user'
+        },
+        {
+          href: '/charts',
+          title: 'Charts',
+          icon: 'fa fa-chart-area',
+          child: [
+            {
+              href: '/charts/sublink',
+              title: 'Sub Link'
+            }
+          ]
+        }
+      ],
       chartOptions: {
         chart: {
           type: 'spline'

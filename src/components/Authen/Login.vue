@@ -37,7 +37,7 @@ export default {
           this.$router.push('/campaign-manager')
           this.$session.start()
           this.$session.set('auth_token', response.body.auth_token)
-          Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.auth_token
+          // Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.auth_token
         }
       }, error => {
         this.$loading(false)

@@ -12,6 +12,9 @@ import VueClazyLoad from 'vue-clazy-load'
 Vue.use(VueClazyLoad)
 import VueSession from 'vue-session'
 Vue.use(VueSession)
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+Vue.use(VueSidebarMenu)
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)

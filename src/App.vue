@@ -5,12 +5,11 @@
 </template>
 
 <script>
-import Login from './components/Authen/Login.vue'
-
+import { SidebarMenu } from 'vue-sidebar-menu'
 export default {
   name: 'App',
   components: {
-    Login
+    SidebarMenu
   }
 }
 </script>
