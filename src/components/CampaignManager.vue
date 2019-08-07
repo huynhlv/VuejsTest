@@ -1,28 +1,30 @@
 <template>
   <div>
-    <sidebar-menu :menu="menu" />
-    <div>
-      <div class="m-2">
-        <img class="w-6 m-auto d-block" src="https://dactech.vn/wp-content/uploads/2019/03/logo-300x200.png" />
-        <h2 class="text-center">Campaign Manager</h2>
+    <sidebar-menu :menu="menu" collapsed showChild />
+    <div class="m-50p">
+      <div>
+        <div class="m-2">
+          <img class="w-6 m-auto d-block" src="https://dactech.vn/wp-content/uploads/2019/03/logo-300x200.png" />
+          <h2 class="text-center">Campaign Manager</h2>
+        </div>
+        <b-nav class="fs-12 my-auto nav-left">
+          <b-nav-item-dropdown
+            text="Admin"
+            toggle-class="nav-link-custom"
+            right
+          >
+            <b-dropdown-item class="fs-12" @click="logout">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-nav>
       </div>
-      <b-nav class="fs-12 my-auto nav-left">
-        <b-nav-item-dropdown
-          text="Admin"
-          toggle-class="nav-link-custom"
-          right
-        >
-          <b-dropdown-item class="fs-12" @click="logout">Logout</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-nav>
-    </div>
-    <Chart :options="chartOptions" />
-    <div class="mx-5">
-      <b-card no-body>
-        <b-tabs card small>
-          <router-view />
-        </b-tabs>
-      </b-card>
+      <Chart :options="chartOptions" />
+      <div class="mx-5">
+        <b-card no-body>
+          <b-tabs card small>
+            <router-view />
+          </b-tabs>
+        </b-card>
+      </div>
     </div>
   </div>
 </template>
@@ -47,18 +49,13 @@ export default {
     return {
       menu: [
         {
-          header: true,
-          title: 'Main Navigation',
-          hiddenOnCollapse: true
-        },
-        {
           href: '/',
-          title: 'Dashboard',
+          title: 'User Account',
           icon: 'fa fa-user'
         },
         {
-          href: '/charts',
-          title: 'Charts',
+          href: '/campaign-manager',
+          title: 'Campaign Manager',
           icon: 'fa fa-chart-area',
           child: [
             {
@@ -66,6 +63,11 @@ export default {
               title: 'Sub Link'
             }
           ]
+        },
+        {
+          href: '/',
+          title: 'Advertisers dashboard',
+          icon: 'fab fa-app-store-ios'
         }
       ],
       chartOptions: {
@@ -76,9 +78,13 @@ export default {
           text: 'Sin chart'
         },
         series: [{
+          // pointStart: 2010,
           data: [10, 0, 8, 2, 6, 4, 5, 5],
           color: '#6fcd98'
-        }]
+        }],
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+        }
       },
     }
   }

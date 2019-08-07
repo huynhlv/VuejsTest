@@ -12,6 +12,13 @@
               {{ data.value }}
             </router-link>
           </template>
+          <template slot="chart" slot-scope="data" >
+            <b-button v-b-modal="'modal-center-' + data.item.id" variant="primary" size="sm">Chart</b-button>
+            <b-modal size="xl" :id="'modal-center-' + data.item.id" centered hide-footer title="HighChart">
+              <Chart :options="chartOptions" />
+
+            </b-modal>
+          </template>
         </b-table>
       </div>
     </b-card-text>
@@ -19,9 +26,42 @@
 </template>
 
 <script>
+import {Chart} from 'highcharts-vue'
 export default {
+  components: {
+    Chart
+  },
   data() {
     return {
+      chartOptions: {
+        chart: {
+          type: 'spline'
+        },
+        title: {
+          text: 'Sin chart'
+        },
+        series: [
+          {
+            // pointStart: 2010,
+            name: 'Click',
+            data: [10, 0, 8, 2, 6, 4, 5, 5],
+            color: '#6fcd98'
+          },
+          {
+            name: 'Impression',
+            data: [10, 5, 4, 1, 2, 3, 7, 4],
+            color: '#1a73e8'
+          }
+        ],
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+        },
+        yAxis: {
+          title: {
+            text: 'Valueee'
+          }
+        }
+      },
       fields: [
         {
           key: 'status',
@@ -83,6 +123,9 @@ export default {
         {
           key: 'budget_type',
           sortable: true
+        },
+        {
+          key: 'chart'
         }
       ],
       items: [
