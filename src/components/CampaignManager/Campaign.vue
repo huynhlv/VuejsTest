@@ -1,5 +1,6 @@
 <template>
-  <b-tab title="Campaign" active>
+  <div>
+    <b-tab title="Campaign" active>
     <b-card-text>
       <div class="fs-13">
         <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
@@ -15,46 +16,113 @@
           <template slot="chart" slot-scope="data" >
             <b-button v-b-modal="'modal-center-' + data.item.id" variant="primary" size="sm">Chart</b-button>
             <b-modal size="xl" :id="'modal-center-' + data.item.id" centered hide-footer title="HighChart">
+              <div class="slect-chart-report col-4">
+                <span class="title">Report Date: </span>
+                <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate"></b-form-select>
+                <span>{{selected}}</span>
+              </div>
               <Chart :options="chartOptions" />
-
             </b-modal>
           </template>
         </b-table>
       </div>
     </b-card-text>
   </b-tab>
+  <button @click="test">test</button>
+  </div>
 </template>
 
 <script>
 import {Chart} from 'highcharts-vue'
 export default {
+  created() {
+    
+  },
+  methods: {
+    selectDate() {
+      switch (this.selected) {
+        case 2:
+          console.log('week')
+          this.chartOptions.xAxis.categories = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
+          ]
+          break
+        case 3:
+          console.log('thang')
+          break
+        default:
+          console.log('ngay');
+          this.chartOptions.xAxis.categories = null
+          break
+      }
+    },
+    test() {
+      this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/ad_performance_report').then(response => {
+        console.log(response.body);
+      }, error => {
+        console.log(error);
+        console.log(new Date().toISOString().slice(0,10));
+      });
+    }
+  },
   components: {
     Chart
   },
   data() {
     return {
+      selected: 1,
+      options: [
+        { value: 1, text: 'Today'},
+        { value: 2, text: 'This Week' },
+        { value: 3, text: 'This Month' }
+      ],
       chartOptions: {
         chart: {
           type: 'spline'
         },
         title: {
-          text: 'Sin chart'
+          text: 'Campaign Peformance'
+        },
+        plotOptions: {
+          spline: {
+            pointInterval: 3600000,
+            pointStart: Date.now()
+          }
         },
         series: [
           {
             // pointStart: 2010,
             name: 'Click',
-            data: [10, 0, 8, 2, 6, 4, 5, 5],
+            data: [
+              3.7, 3.3, 3.9, 5.1, 3.5, 3.8, 4.0, 5.0, 6.1, 3.7, 3.3, 6.4,
+              6.9, 6.0, 6.8, 4.4, 4.0, 3.8, 5.0, 4.9, 9.2, 9.6, 9.5, 6.3,
+              9.5, 10.8, 14.0, 11.5, 10.0, 10.2, 10.3, 9.4, 8.9, 10.6, 10.5, 11.1,
+              10.4, 10.7, 11.3, 10.2, 9.6, 10.2, 11.1, 10.8, 13.0, 12.5, 12.5, 11.3,
+              10.1
+            ],
             color: '#6fcd98'
           },
           {
             name: 'Impression',
-            data: [10, 5, 4, 1, 2, 3, 7, 4],
+            data: [
+              0.2, 0.1, 0.1, 0.1, 0.3, 0.2, 0.3, 0.1, 0.7, 0.3, 0.2, 0.2,
+              0.3, 0.1, 0.3, 0.4, 0.3, 0.2, 0.3, 0.2, 0.4, 0.0, 0.9, 0.3,
+              0.7, 1.1, 1.8, 1.2, 1.4, 1.2, 0.9, 0.8, 0.9, 0.2, 0.4, 1.2,
+              0.3, 2.3, 1.0, 0.7, 1.0, 0.8, 2.0, 1.2, 1.4, 3.7, 2.1, 2.0,
+              1.5
+            ],
             color: '#1a73e8'
           }
         ],
         xAxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
+          type: 'datetime',
+          categories: null
         },
         yAxis: {
           title: {

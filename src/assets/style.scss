@@ -79,3 +79,11 @@ html, body {
   top: 3%;
   left: 94%;
 }
+
+.slect-chart-report {
+  display: flex;
+  .title {
+    width: 45%;
+    margin: auto;
+  }
+}

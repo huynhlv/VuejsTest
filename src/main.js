@@ -19,7 +19,7 @@ Vue.use(VueSidebarMenu)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueResource);
-Vue.http.options.root = 'https://sherpa-api-huynhlv.herokuapp.com/api/'
+// Vue.http.options.root = 'https://sherpa-api-huynhlv.herokuapp.com/api/'
 Vue.use(VueRouter)
 Vue.use(VueLoading)
 /* eslint-disable no-new */
