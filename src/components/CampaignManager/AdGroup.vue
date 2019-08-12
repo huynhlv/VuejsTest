@@ -22,6 +22,14 @@
 </template>
 <script>
 export default {
+  created() {
+    this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/ad_performance_report').then(response => {
+        // this.items = response.body
+      }, error => {
+        console.log(error)
+        // console.log(new Date().toISOString().slice(0,10))
+    });
+  },
   methods: {
     backCampaign() {
       this.$router.push('/campaign-manager')
