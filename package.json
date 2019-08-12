@@ -24,6 +24,7 @@
     "vue-session": "^1.0.0",
     "vue-sidebar-menu": "^4.0.0",
     "vuejs-loading-plugin": "^1.0.5",
+    "vuetify": "^2.0.5",
     "vuex": "^3.1.1"
   },
   "devDependencies": {

@@ -17,7 +17,6 @@
           </b-nav-item-dropdown>
         </b-nav>
       </div>
-      <Chart :options="chartOptions" />
       <div class="mx-5">
         <b-card no-body>
           <b-tabs card small>
@@ -29,11 +28,7 @@
   </div>
 </template>
 <script>
-import {Chart} from 'highcharts-vue'
 export default {
-  components: {
-    Chart
-  },
   beforeCreate() {
     if(!this.$session.exists()) {
       this.$router.push('/')
@@ -69,23 +64,7 @@ export default {
           title: 'Advertisers dashboard',
           icon: 'fab fa-app-store-ios'
         }
-      ],
-      chartOptions: {
-        chart: {
-          type: 'spline'
-        },
-        title: {
-          text: 'Sin chart'
-        },
-        series: [{
-          // pointStart: 2010,
-          data: [10, 0, 8, 2, 6, 4, 5, 5],
-          color: '#6fcd98'
-        }],
-        xAxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
-        }
-      },
+      ]
     }
   }
 }

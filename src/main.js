@@ -15,7 +15,9 @@ Vue.use(VueSession)
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 Vue.use(VueSidebarMenu)
-
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueResource);

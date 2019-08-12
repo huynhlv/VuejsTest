@@ -3,7 +3,13 @@
     <b-tab title="Campaign" active>
     <b-card-text>
       <div class="fs-13">
-        <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+        <div v-if="!this.items" class="progress-cir">
+          <v-progress-circular
+            :size="50"
+            indeterminate
+          ></v-progress-circular>
+        </div>
+        <b-table v-else class="my-table" small bordered responsive :items="items" :fields="fields">
           <template slot="status" slot-scope="data" >
             <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
             <b-form-checkbox v-else switch></b-form-checkbox>
