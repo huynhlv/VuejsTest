@@ -150,35 +150,28 @@ export default {
           sortable: true
         },
         {
-          key: 'id',
+          key: 'campaign_id',
           label: 'ID',
           sortable: true
         },
         {
-          key: 'name',
+          key: 'campaign_name',
           label: 'Campaign Name',
           sortable: true
         },
         {
-          key: 'spent',
+          key: 'total_clicks',
+          label: 'Clicks',
           sortable: true
         },
         {
-          key: 'click',
+          key: 'total_views',
+          label: 'Views',
           sortable: true
         },
         {
-          key: 'impression',
-          sortable: true
-        },
-        {
-          key: 'ctr',
-          label: 'CTR',
-          sortable: true
-        },
-        {
-          key: 'cpc',
-          label: 'CPC',
+          key: 'total_costs',
+          label: 'Costs',
           sortable: true
         },
         {
@@ -191,19 +184,11 @@ export default {
           sortable: true
         },
         {
-          key: 'objective',
+          key: 'period_from',
           sortable: true
         },
         {
-          key: 'start_schedule',
-          sortable: true
-        },
-        {
-          key: 'end_schedule',
-          sortable: true
-        },
-        {
-          key: 'budget_type',
+          key: 'period_to',
           sortable: true
         },
         {
