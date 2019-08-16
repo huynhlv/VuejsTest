@@ -15,13 +15,13 @@
             <b-form-checkbox v-else switch></b-form-checkbox>
           </template>
           <template slot="name" slot-scope="data" >
-            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.id }" class="link-a">
+            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_id }" class="link-a">
               {{ data.value }}
             </router-link>
           </template>
           <template slot="chart" slot-scope="data" >
-            <b-button v-b-modal="'modal-center-' + data.item.id" variant="primary" size="sm">Chart</b-button>
-            <b-modal size="xl" :id="'modal-center-' + data.item.id" centered hide-footer title="HighChart">
+            <b-button v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">Chart</b-button>
+            <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
                 <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate"></b-form-select>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     fetchItemList() {
-      this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/ad_performance_report').then(response => {
+      this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns', {headers: {'Authorization': this.$session.get('jwt')}}).then(response => {
           this.items = response.body
         }, error => {
           console.log(error)

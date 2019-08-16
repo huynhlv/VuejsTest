@@ -27,6 +27,10 @@ export default {
         email: '',
         password: ''
       },
+      userMedia: {
+        email: 'social@gmail.com',
+        password: '12345678'
+      },
       msgErrors: ''
     }
   },
@@ -35,11 +39,17 @@ export default {
       this.$loading(true)
       this.$http.post('https://sherpa-api-huynhlv.herokuapp.com/api/sessions', this.user).then(response => {
         if(response.status === 200 && 'auth_token' in response.body) {
-          this.$loading(false)
-          this.$router.push('/campaign-manager')
           this.$session.start()
           this.$session.set('auth_token', response.body.auth_token)
-          Vue.http.headers.common['Authorization'] = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hZC10ZWNoLWRhYy5oZXJva3VhcHAuY29tXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNTY1MjM1ODI4LCJleHAiOjE1NjUyMzk0MjgsIm5iZiI6MTU2NTIzNTgyOCwianRpIjoiOG9lWjZQZ1NiZmpLTTZidSIsInN1YiI6MiwicHJ2IjoiYWExMjcwMGJlODEzYTRkMDRmNzU1NWM1OWJmZDA1Y2NjNzVlYWJjNSJ9.g__UCYK92Pa0CZ_gOyLI3iWlTPN_KDw4x_GRBE2YpMA'
+          this.$http.post('http://ad-tech-dac.herokuapp.com/api/auth/login', this.userMedia).then(response => {
+            this.$loading(false)
+            this.$router.push('/campaign-manager')
+            this.$session.set('jwt', 'Bearer ' + response.body.token)
+          }, error => {
+            this.$loading(false)
+            this.msgErrors = 'Invalid email or password'
+            document.getElementById('error-msg').className = "alert alert-danger";
+              });
         }
       }, error => {
         this.$loading(false)
