@@ -27,9 +27,67 @@ export default {
         email: '',
         password: ''
       },
-      userMedia: {
-        email: 'social@gmail.com',
-        password: '12345678'
+      listAccount: {
+        advertiserEmails: [
+          "cbode@welch.com",
+          "erdman.jacey@lakin.biz",
+          "abe.cummerata@hotmail.com",
+          "ablick@yahoo.com",
+          "adeline84@gmail.com",
+          "ansley39@pollich.com",
+          "bernhard.lesley@hyatt.info",
+          "breanne59@herman.com",
+          "bruen.helga@bechtelar.com",
+          "cassidy19@strosin.net",
+          "cbode@welch.com",
+          "chanel84@yahoo.com",
+          "cielo12@dare.org",
+          "cindy85@gmail.com",
+          "ckoss@gmail.com",
+          "clarabelle66@hotmail.com",
+          "conn.randal@hermann.com",
+          "constance78@yahoo.com",
+          "crist.melvin@schinner.com",
+          "cullen.zieme@klein.com",
+          "damien22@hudson.com",
+          "david21@russel.com",
+          "dgutkowski@gmail.com",
+          "dkessler@torp.com",
+          "dmohr@gmail.com",
+          "dnolan@hotmail.com",
+          "dooley.conrad@hotmail.com",
+          "earl64@hotmail.com",
+          "edietrich@yahoo.com",
+          "eleannon@yahoo.com",
+          "epaucek@rohan.com",
+          "erdman.jacey@lakin.biz",
+          "ernesto.heidenreich@gmail.com",
+          "esperanza08@murazik.net",
+          "fbayer@gmail.com",
+          "ford.bogan@raynor.com",
+          "goldner.kathryne@strosin.com",
+          "guadalupe.ruecker@upton.com",
+          "haag.elsa@champlin.com",
+          "hane.milford@hotmail.com",
+          "hanna.kub@bahringer.biz",
+          "hauck.lue@hotmail.com",
+          "heidenreich.otho@gmail.com",
+          "ignacio06@gmail.com",
+          "jframi@rippin.com",
+          "jocelyn.considine@hotmail.com",
+          "karlee29@gmail.com",
+          "kendra.ruecker@gleichner.info",
+          "kozey.myrna@kerluke.org",
+          "kreiger.fredy@homenick.net",
+          "ksipes@gerlach.biz",
+          "lehner.domenico@white.com",
+          "xfritsch@mosciski.com",
+          "xharvey@hotmail.com",
+          "yquigley@kuvalis.com",
+          "zemlak.giles@gmail.com",
+          "ziemann.ernestine@gmail.com",
+          "zstark@hotmail.com",
+        ]
       },
       msgErrors: ''
     }
@@ -41,15 +99,9 @@ export default {
         if(response.status === 200 && 'auth_token' in response.body) {
           this.$session.start()
           this.$session.set('auth_token', response.body.auth_token)
-          this.$http.post('http://ad-tech-dac.herokuapp.com/api/auth/login', this.userMedia).then(response => {
-            this.$loading(false)
-            this.$router.push('/campaign-manager')
-            this.$session.set('jwt', 'Bearer ' + response.body.token)
-          }, error => {
-            this.$loading(false)
-            this.msgErrors = 'Invalid email or password'
-            document.getElementById('error-msg').className = "alert alert-danger";
-              });
+          this.$session.set('listAccount', this.listAccount)
+          this.$loading(false)
+          this.$router.push('/campaign-manager')
         }
       }, error => {
         this.$loading(false)

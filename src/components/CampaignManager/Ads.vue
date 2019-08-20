@@ -5,14 +5,20 @@
     <b-tab title="Ads" active>
       <b-card-text>
         <div class="fs-13">
-          <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+          <div v-if="!this.items" class="progress-cir">
+            <v-progress-circular
+              :size="50"
+              indeterminate
+            ></v-progress-circular>
+          </div>
+          <b-table v-else class="my-table" small bordered responsive :items="items" :fields="fields">
             <template slot="status" slot-scope="data" >
               <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
               <b-form-checkbox v-else switch></b-form-checkbox>
             </template>
-            <template slot="image" slot-scope="data" >
-              <span v-if="data.item.type_preview == '0'">
-                <clazy-load :src="data.value" :id="'popover' + data.item.id">
+            <template slot="link_preview" slot-scope="data" >
+              <span v-if="data.item.type_preview == 'image'">
+                <clazy-load :src="data.value" :id="'popover' + data.item.ad_id">
                   <button class="b-none">
                     <img class="w-image" :src="data.value">
                   </button>
@@ -20,25 +26,25 @@
                     <img class="w-image" src="http://www.wellcommshop.com/image/data/loading.gif">
                   </div>
                 </clazy-load>
-                <b-popover :target="'popover'+ data.item.id" :title="'ID Ad: ' + data.item.id" triggers="focus">
+                <b-popover :target="'popover'+ data.item.ad_id" :title="'ID Ad: ' + data.item.ad_id" triggers="focus">
                   <img class="w-image-zoom" :src="data.value"/>
                 </b-popover>
               </span>
               <span v-else>
                 <div class="video">
-                  <div :id="'popover' + data.item.id">
+                  <div :id="'popover' + data.item.ad_id">
                     <button class="b-none">
-                      <video class="w-image" :id="'video' + data.item.id">
+                      <video class="w-image" :id="'video' + data.item.ad_id">
                         <source :src="data.value" type="video/mp4">
                       </video>
                     </button>
                   </div>
                   <div class="icon-play" id="icon-play">
-                    <i :title="'Play Video'" class="far fa-play-circle play-video" @click="playVideo('video' + data.item.id)"></i>
+                    <i :title="'Play Video'" class="far fa-play-circle play-video" @click="playVideo('video' + data.item.ad_id)"></i>
                   </div>
                 </div>
-                <b-popover :target="'popover'+ data.item.id" :title="'ID Ad: ' + data.item.id" triggers="focus">
-                  <video class="w-image-zoom" controls autoplay :id="'popover' + data.item.id">
+                <b-popover :target="'popover'+ data.item.ad_id" :title="'ID Ad: ' + data.item.ad_id" triggers="focus">
+                  <video class="w-image-zoom" controls autoplay :id="'popover' + data.item.ad_id">
                     <source :src="data.value" type="video/mp4">
                   </video>
                 </b-popover>
@@ -53,7 +59,17 @@
 <script>
 import { VueClazyLoad } from 'vue-clazy-load'
 export default {
+  created() {
+    this.fetchItemList()
+  },
   methods: {
+    fetchItemList() {
+      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+ this.$route.params.idcampaign +'/adgroups/'+ this.$route.params.idadgroup + '/ads', this.$session.get('listAccount')).then(response => {
+          this.items = response.body
+        }, error => {
+          console.log(error)
+      });
+    },
     playVideo(id) {
       var myVideo = document.getElementById(id);
       var icon = document.getElementById('icon-play');
@@ -77,57 +93,14 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-            "id": 18,
-            "ag_id": 19,
-            "status": 0,
-            "type_preview": 1,
-            "ad_name": "Sherman Zulauf DVM",
-            "image": "https://www.w3schools.com/html/mov_bbb.mp4",
-            "delivery_status": "Prof. Gisselle Anderson DVM",
-            "spent": 972793,
-            "click": 526,
-            "impression": "Thaddeus Haag",
-            "ctr": 707,
-            "cpc": 15
-        },
-        {
-            "id": 49,
-            "ag_id": 19,
-            "status": 0,
-            "type_preview": 0,
-            "ad_name": "Mr. Doug Muller Sr.",
-            "image": "https://vevietnamairline.com/Img.ashx?636547984689865774.jpg",
-            "delivery_status": "Elenora Wilkinson",
-            "spent": 348803,
-            "click": 287,
-            "impression": "Dr. Carson Bauch",
-            "ctr": 183,
-            "cpc": 452
-        },
-        {
-            "id": 97,
-            "ag_id": 19,
-            "status": 0,
-            "type_preview": 0,
-            "ad_name": "Dr. Demetrius Moore",
-            "image": "https://vietjet.net/includes/uploads/2016/01/thang-tu-ve-thien-nhien-quyen-ru-dieu-ky2.jpg",
-            "delivery_status": "Malika Blick",
-            "spent": 886854,
-            "click": 175,
-            "impression": "Savannah Konopelski",
-            "ctr": 980,
-            "cpc": 546
-        }
-    ],
+      items: null,
       fields: [
         {
           key: 'status',
           sortable: true
         },
         {
-          key: 'id',
+          key: 'ad_id',
           label: 'Ad ID',
           sortable: true
         },
@@ -136,7 +109,7 @@ export default {
           sortable: true
         },
         {
-          key: 'image',
+          key: 'link_preview',
           label: 'Creative Preview'
         },
         {
@@ -144,25 +117,43 @@ export default {
           sortable: true
         },
         {
-          key: 'spent',
+          key: 'period_budget',
           sortable: true
         },
         {
-          key: 'click',
+          key: 'period_from',
           sortable: true
         },
         {
-          key: 'impression',
+          key: 'period_to',
           sortable: true
         },
         {
-          key: 'ctr',
-          label: 'CTR',
+          key: 'total_clicks',
           sortable: true
         },
         {
-          key: 'cpc',
-          label: 'CPC',
+          key: 'total_costs',
+          sortable: true
+        },
+        {
+          key: 'total_views',
+          sortable: true
+        },
+        {
+          key: 'total_25per_completions',
+          sortable: true
+        },
+        {
+          key: 'total_50per_completions',
+          sortable: true
+        },
+        {
+          key: 'total_75per_completions',
+          sortable: true
+        },
+        {
+          key: 'total_100per_completions',
           sortable: true
         }
       ]

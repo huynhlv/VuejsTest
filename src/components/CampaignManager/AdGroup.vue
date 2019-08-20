@@ -4,13 +4,19 @@
     <b-tab title="AdGroups" active>
       <b-card-text>
         <div class="fs-13">
-          <b-table class="my-table" small bordered responsive :items="items" :fields="fields">
+          <div v-if="!this.items" class="progress-cir">
+            <v-progress-circular
+              :size="50"
+              indeterminate
+            ></v-progress-circular>
+          </div>
+          <b-table v-else class="my-table" small bordered responsive :items="items" :fields="fields">
             <template slot="status" slot-scope="data" >
               <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
               <b-form-checkbox v-else switch></b-form-checkbox>
             </template>
-            <template slot="ag_name" slot-scope="data" >
-              <router-link tag="span" :to="{ path: $route.params.idcampaign + '/' + data.item.id }" class="link-a">
+            <template slot="adgroup_name" slot-scope="data" >
+              <router-link tag="span" :to="{ path: $route.params.idcampaign + '/' + data.item.adgroup_id }" class="link-a">
                 {{ data.value }}
               </router-link>
             </template>
@@ -23,102 +29,80 @@
 <script>
 export default {
   created() {
-    this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/ad_performance_report').then(response => {
-        // this.items = response.body
-      }, error => {
-        console.log(error)
-        // console.log(new Date().toISOString().slice(0,10))
-    });
+    this.fetchItemList()
   },
   methods: {
     backCampaign() {
       this.$router.push('/campaign-manager')
+    },
+    fetchItemList() {
+      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+ this.$route.params.idcampaign +'/adgroups', this.$session.get('listAccount')).then(response => {
+          this.items = response.body
+        }, error => {
+          console.log(error)
+      });
     }
   },
   data() {
     return {
-      items: [
-        {
-          "id": 19,
-          "campaign_id": 1,
-          "status": 0,
-          "ag_name": "Miss Jacinthe Hill MD",
-          "delivery_status": "Zula Raynor I",
-          "spent": 37989,
-          "click": 446,
-          "impression": "Joyce Lueilwitz",
-          "ctr": 183,
-          "cpc": 72,
-          "daily_budget": 957557,
-          "bid": "9098",
-          "bid_amount": 797
-        },
-        {
-          "id": 5,
-          "campaign_id": 3,
-          "status": 1,
-          "ag_name": "Bonita Champlin",
-          "delivery_status": "Anabelle Ondricka PhD",
-          "spent": 63156,
-          "click": 756,
-          "impression": "Josue Kemmer",
-          "ctr": 352,
-          "cpc": 166,
-          "daily_budget": 325910,
-          "bid": "5774",
-          "bid_amount": 762
-        }
-      ],
+      items: null,
       fields: [
         {
           key: 'status',
           sortable: true
         },
         {
-          key: 'id',
+          key: 'adgroup_id',
           label: 'ID',
           sortable: true
         },
         {
-          key: 'ag_name',
+          key: 'adgroup_name',
+          label: 'Ag Name',
           sortable: true
         },
         {
-          key: 'dilivery_status',
+          key: 'period_from',
           sortable: true
         },
         {
-          key: 'spent',
+          key: 'period_to',
           sortable: true
         },
         {
-          key: 'click',
+          key: 'delivery_status',
           sortable: true
         },
         {
-          key: 'impression',
+          key: 'period_budget',
+          sortable: true
+        },
+        {
+          key: 'total_clicks',
+          sortable: true
+        },
+        {
+          key: 'total_views',
           sortable: true
         },,
         {
-          key: 'ctr',
-          label: 'CTR',
+          key: 'total_costs',
           sortable: true
         },
         {
-          key: 'cpc',
-          label: 'CPC',
+          key: 'total_25per_completions',
           sortable: true
         },
         {
-          key: 'daily_budget',
+          key: 'total_50per_completions',
           sortable: true
         },
         {
-          key: 'bid',
+          key: 'total_75per_completions',
           sortable: true
         },
         {
-          key: 'bid_amount',
+          key: 'total_100per_completions',
           sortable: true
         }
       ]

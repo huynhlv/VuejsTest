@@ -14,18 +14,17 @@
             <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
             <b-form-checkbox v-else switch></b-form-checkbox>
           </template>
-          <template slot="name" slot-scope="data" >
+          <template slot="campaign_name" slot-scope="data" >
             <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_id }" class="link-a">
               {{ data.value }}
             </router-link>
           </template>
           <template slot="chart" slot-scope="data" >
-            <b-button v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">Chart</b-button>
+            <b-button @click="reportCampaign(data.item.campaign_id)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">Chart</b-button>
             <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
-                <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate"></b-form-select>
-                <span>{{selected}}</span>
+                <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate(data.item.campaign_id)"></b-form-select>
               </div>
               <Chart :options="chartOptions" />
             </b-modal>
@@ -34,7 +33,6 @@
       </div>
     </b-card-text>
   </b-tab>
-  <button @click="test">test</button>
   </div>
 </template>
 
@@ -46,43 +44,58 @@ export default {
   },
   methods: {
     fetchItemList() {
-      this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns', {headers: {'Authorization': this.$session.get('jwt')}}).then(response => {
+      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns', this.$session.get('listAccount')).then(response => {
           this.items = response.body
         }, error => {
           console.log(error)
-          // console.log(new Date().toISOString().slice(0,10))
       });
     },
-    selectDate() {
+    reportCampaign(id) {
+      this.fetchReportCampaign(id, 'report-today')
+    },
+    fetchReportCampaign(id, select) {
+      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+id+'/'+select, this.$session.get('listAccount')).then(response => {
+          var clicks=[], views=[], total_25per=[], total_50per=[], total_75per=[], total_100per=[], date=[]
+          for(let i=0; i<response.body.length; i++)
+          {
+            clicks.push(response.body[i].total_clicks)
+            views.push(response.body[i].total_views)
+            total_25per.push(response.body[i].total_25per_completions)
+            total_50per.push(response.body[i].total_50per_completions)
+            total_75per.push(response.body[i].total_75per_completions)
+            total_100per.push(response.body[i].total_100per_completions)
+            date.push(response.body[i].date)
+          }
+          var series = [
+            {
+              name: 'Click',
+              data: clicks,
+              color: '#6fcd98'
+            },
+            {
+              name: 'Views',
+              data: views,
+              color: '#007bff'
+            },
+          ]
+          this.chartOptions.series = series
+          this.chartOptions.xAxis.categories = date
+        }, error => {
+          console.log(error)
+      });
+    },
+    selectDate(id) {
       switch (this.selected) {
         case 2:
-          console.log('week')
-          this.chartOptions.xAxis.categories = [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-          ]
+          this.fetchReportCampaign(id, 'report-this-week')
           break
         case 3:
-          console.log('thang')
+          this.fetchReportCampaign(id, 'report-this-month')
           break
         default:
-          console.log('ngay');
-          this.chartOptions.xAxis.categories = null
+          this.fetchReportCampaign(id, 'report-today')
           break
       }
-    },
-    test() {
-      this.$http.get('http://ad-tech-dac.herokuapp.com/api/social_accounts/ad_performance_report').then(response => {
-        console.log(response.body);
-      }, error => {
-        console.log(error);
-        console.log(new Date().toISOString().slice(0,10));
-      });
     }
   },
   components: {
@@ -90,6 +103,12 @@ export default {
   },
   data() {
     return {
+      listAccount: {
+        advertiserEmails: [
+          "cbode@welch.com",
+          "erdman.jacey@lakin.biz"
+        ]
+      },
       selected: 1,
       options: [
         { value: 1, text: 'Today'},
@@ -103,39 +122,14 @@ export default {
         title: {
           text: 'Campaign Peformance'
         },
-        plotOptions: {
-          spline: {
-            pointInterval: 3600000,
-            pointStart: Date.now()
-          }
-        },
-        series: [
-          {
-            // pointStart: 2010,
-            name: 'Click',
-            data: [
-              3.7, 3.3, 3.9, 5.1, 3.5, 3.8, 4.0, 5.0, 6.1, 3.7, 3.3, 6.4,
-              6.9, 6.0, 6.8, 4.4, 4.0, 3.8, 5.0, 4.9, 9.2, 9.6, 9.5, 6.3,
-              9.5, 10.8, 14.0, 11.5, 10.0, 10.2, 10.3, 9.4, 8.9, 10.6, 10.5, 11.1,
-              10.4, 10.7, 11.3, 10.2, 9.6, 10.2, 11.1, 10.8, 13.0, 12.5, 12.5, 11.3,
-              10.1
-            ],
-            color: '#6fcd98'
-          },
-          {
-            name: 'Impression',
-            data: [
-              0.2, 0.1, 0.1, 0.1, 0.3, 0.2, 0.3, 0.1, 0.7, 0.3, 0.2, 0.2,
-              0.3, 0.1, 0.3, 0.4, 0.3, 0.2, 0.3, 0.2, 0.4, 0.0, 0.9, 0.3,
-              0.7, 1.1, 1.8, 1.2, 1.4, 1.2, 0.9, 0.8, 0.9, 0.2, 0.4, 1.2,
-              0.3, 2.3, 1.0, 0.7, 1.0, 0.8, 2.0, 1.2, 1.4, 3.7, 2.1, 2.0,
-              1.5
-            ],
-            color: '#1a73e8'
-          }
-        ],
+        // plotOptions: {
+          // spline: {
+          //   pointInterval: 3600000,
+          //   pointStart: Date.now()
+          // }
+        // },
+        series: null,
         xAxis: {
-          type: 'datetime',
           categories: null
         },
         yAxis: {
