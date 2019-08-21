@@ -22,6 +22,10 @@ html, body {
   margin-left: 50px;
 }
 
+.m-8p {
+  margin: 8px;
+}
+
 .p-40p {
   padding: 40px;
 }
@@ -83,7 +87,7 @@ html, body {
 .nav-left {
   position: absolute;
   top: 3%;
-  left: 94%;
+  left: 92%;
 }
 
 .slect-chart-report {
@@ -97,4 +101,13 @@ html, body {
 .progress-cir {
   text-align: center;
   color: #1f85fb;
+}
+
+.add-acount {
+  margin: -14px 1px;
+  margin-bottom: 2px;
+}
+
+.f-right {
+  float: right;
 }

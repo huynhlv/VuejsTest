@@ -9,25 +9,25 @@ export default {
     return {
       menu: [
         {
-          href: '/',
-          title: 'User Account',
-          icon: 'fa fa-user'
-        },
-        {
           href: '/campaign-manager',
           title: 'Campaign Manager',
           icon: 'fa fa-chart-area',
-          child: [
-            {
-              href: '/charts/sublink',
-              title: 'Sub Link'
-            }
-          ]
+          // child: [
+          //   {
+          //     href: '/charts/sublink',
+          //     title: 'Sub Link'
+          //   }
+          // ]
         },
         {
           href: '/advertiser',
           title: 'Advertisers dashboard',
           icon: 'fab fa-app-store-ios'
+        },
+        {
+          href: '/',
+          title: 'User Account',
+          icon: 'fa fa-user'
         }
       ]
     }
