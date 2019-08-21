@@ -24,6 +24,11 @@ Vue.use(VueResource);
 // Vue.http.options.root = 'https://sherpa-api-huynhlv.herokuapp.com/api/'
 Vue.use(VueRouter)
 Vue.use(VueLoading)
+import Highcharts from 'highcharts';
+import HighchartsNoData from 'highcharts-no-data-to-display';
+
+HighchartsNoData(Highcharts);
+
 /* eslint-disable no-new */
 const router = new VueRouter({
   routes
