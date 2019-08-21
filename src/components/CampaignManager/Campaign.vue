@@ -51,6 +51,7 @@ export default {
       });
     },
     reportCampaign(id) {
+      this.selected = 1
       this.fetchReportCampaign(id, 'report-today')
     },
     fetchReportCampaign(id, select) {
@@ -76,6 +77,26 @@ export default {
               name: 'Views',
               data: views,
               color: '#007bff'
+            },
+            {
+              name: 'Video watchs 25%',
+              data: total_25per,
+              color: '#fc03fc'
+            },
+            {
+              name: 'Video watchs 50%',
+              data: total_50per,
+              color: '#fc7703'
+            },
+            {
+              name: 'Video watchs 75%',
+              data: total_75per,
+              color: '#ebfc03'
+            },
+            {
+              name: 'Video watchs 100%',
+              data: total_100per,
+              color: '#03fcfc'
             },
           ]
           this.chartOptions.series = series
