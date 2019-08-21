@@ -14,8 +14,8 @@ export default {
           icon: 'fa fa-chart-area',
           // child: [
           //   {
-          //     href: '/charts/sublink',
-          //     title: 'Sub Link'
+          //     // href: '/campaign-manager/:idcampaign',
+          //     // title: 'Sub Link'
           //   }
           // ]
         },

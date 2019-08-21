@@ -3,12 +3,12 @@
     <h2 class="m-50p text-center">Advertiser Manager</h2>
     <div class="m-50p fs-13 w-50 m-auto">
       <div class="d-flex">
-        <v-text-field class="add-acount" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
+        <v-text-field class="add-acount" :placeholder="'Account advertiser'" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
         <v-btn @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>Add
           <v-icon dark right>add</v-icon>
         </v-btn>
       </div>
-      <b-table class="my-table text-nowrap" small bordered responsive :items="items" :fields="fields">
+      <b-table sticky-header="450px" head-variant="light" class="text-nowrap" small bordered responsive :items="items" :fields="fields">
         <div slot="acction" slot-scope="data">
           <b-modal :id="'modal-center-' + data.item.email" hide-footer ref="modal" title="Edit Account">
             <v-text-field v-model="emailEdit" @keyup.enter="updateEmail"></v-text-field>
