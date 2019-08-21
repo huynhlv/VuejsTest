@@ -11,7 +11,7 @@
               indeterminate
             ></v-progress-circular>
           </div>
-          <b-table v-else class="my-table" small bordered responsive :items="items" :fields="fields">
+          <b-table v-else class="my-table text-nowrap" small bordered responsive :items="items" :fields="fields">
             <template slot="status" slot-scope="data" >
               <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
               <b-form-checkbox v-else switch></b-form-checkbox>
@@ -44,7 +44,7 @@
                   </div>
                 </div>
                 <b-popover :target="'popover'+ data.item.ad_id" :title="'ID Ad: ' + data.item.ad_id" triggers="focus">
-                  <video class="w-image-zoom" controls autoplay :id="'popover' + data.item.ad_id">
+                  <video class="w-image-zoom" controls :id="'popover' + data.item.ad_id">
                     <source :src="data.value" type="video/mp4">
                   </video>
                 </b-popover>

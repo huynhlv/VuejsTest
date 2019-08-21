@@ -24,10 +24,11 @@ Vue.use(VueResource);
 // Vue.http.options.root = 'https://sherpa-api-huynhlv.herokuapp.com/api/'
 Vue.use(VueRouter)
 Vue.use(VueLoading)
-import Highcharts from 'highcharts';
-import HighchartsNoData from 'highcharts-no-data-to-display';
-
+import Highcharts from 'highcharts'
+import HighchartsNoData from 'highcharts-no-data-to-display'
 HighchartsNoData(Highcharts);
+
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 /* eslint-disable no-new */
 const router = new VueRouter({
@@ -36,6 +37,7 @@ const router = new VueRouter({
 
 new Vue({
   el: '#app',
+  vuetify: new Vuetify(),
   router,
   store,
   render: h => h(App)

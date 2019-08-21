@@ -9,17 +9,17 @@
             indeterminate
           ></v-progress-circular>
         </div>
-        <b-table v-else class="my-table" small bordered responsive :items="items" :fields="fields">
-          <template slot="status" slot-scope="data" >
+        <b-table v-else class="my-table text-nowrap" small bordered responsive :items="items" :fields="fields">
+          <div slot="status" slot-scope="data" >
             <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
             <b-form-checkbox v-else switch></b-form-checkbox>
-          </template>
-          <template slot="campaign_name" slot-scope="data" >
+          </div>
+          <div slot="campaign_name" slot-scope="data" >
             <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_id }" class="link-a">
               {{ data.value }}
             </router-link>
-          </template>
-          <template slot="chart" slot-scope="data" >
+          </div>
+          <div slot="chart" slot-scope="data" >
             <b-button @click="reportCampaign(data.item.campaign_id)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">Chart</b-button>
             <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
@@ -28,7 +28,7 @@
               </div>
               <Chart :options="chartOptions" />
             </b-modal>
-          </template>
+          </div>
         </b-table>
       </div>
     </b-card-text>
