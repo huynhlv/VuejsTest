@@ -3,8 +3,8 @@
     <h2 class="m-50p text-center">Advertiser Manager</h2>
     <div class="m-50p fs-13 w-50 m-auto">
       <div class="d-flex">
-        <v-text-field class="add-acount" :placeholder="'Account advertiser'" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
-        <v-btn @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>Add
+        <v-text-field :placeholder="'Account advertiser'" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
+        <v-btn class="btn-add-acount" @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>Add
           <v-icon dark right>add</v-icon>
         </v-btn>
       </div>
