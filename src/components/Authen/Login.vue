@@ -11,7 +11,7 @@
       </div>
       <div class="form-group">
         <label class="font-weight-bold">Password</label>
-        <input v-model="user.password" type="password" class="form-control fs-13" placeholder="Password">
+        <input v-model="user.password" @keyup.enter="login" type="password" class="form-control fs-13" placeholder="Password">
       </div>
       <button @click="login" class="btn btn-primary fs-13 w-100">Log in</button>
     </div>
@@ -30,16 +30,12 @@ export default {
       listAccount: {
         advertiserEmails: [
           "cbode@welch.com",
-          "erdman.jacey@lakin.biz",
-          "abe.cummerata@hotmail.com",
-          "ablick@yahoo.com",
           "adeline84@gmail.com",
           "ansley39@pollich.com",
           "bernhard.lesley@hyatt.info",
           "breanne59@herman.com",
           "bruen.helga@bechtelar.com",
           "cassidy19@strosin.net",
-          "cbode@welch.com",
           "chanel84@yahoo.com",
           "cielo12@dare.org",
           "cindy85@gmail.com",
