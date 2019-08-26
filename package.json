@@ -21,6 +21,7 @@
     "material-design-icons-iconfont": "^5.0.1",
     "vue": "^2.5.2",
     "vue-clazy-load": "^0.4.2",
+    "vue-i18n": "^8.14.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-session": "^1.0.0",

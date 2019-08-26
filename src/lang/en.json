@@ -1,0 +1,68 @@
+{
+  "common": {
+    "select_lang": "Language",
+    "logout": "Logout",
+    "admin": "Admin"
+  },
+  "login": {
+    "email_address": "Email address",
+    "enter_email": "Enter Email",
+    "password": "Password",
+    "btn_login": "Login"
+  },
+  "sidebar": {
+    "campaign_manager": "Campaign Manager",
+    "advertisers": "Advertisers",
+    "user_account": "User Account"
+  },
+  "advertiser": {
+    "title": "Advertiser Manager",
+    "add": "Add",
+    "account_advertiser": "Account advertiser",
+    "email": "Email",
+    "action": "Action",
+    "edit_account": "Edit Account",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+  "campaign": {
+    "campaign_manager": "Campaign Manager",
+    "campaign": "Campaign",
+    "ad_groups": "AdGroups",
+    "ads": "Ads",
+    "table": {
+      "status": "Status",
+      "id": "ID",
+      "campaign_name": "Campaign Name",
+      "clicks": "Clicks",
+      "views": "Views",
+      "costs": "Costs",
+      "delivery_status": "Delivery Status",
+      "kpi": "KPI",
+      "period_from": "Period From",
+      "period_to": "Period To",
+      "chart": "Chart",
+      "ag_name": "Ag Name",
+      "period_budget": "Period Budget",
+      "total_25per": "Total 25per Completions",
+      "total_50per": "Total 50per Completions",
+      "total_75per": "Total 75per Completions",
+      "total_100per": "Total 100per Completions",
+      "ad_id": "Ad ID",
+      "ad_name": "Ad Name",
+      "creative_preview": "Creative Preview"
+    },
+    "chart": {
+      "highchart": "HighChart",
+      "report_date": "Report Date",
+      "today": "Today",
+      "this_week": "This Week",
+      "this_month": "This Month",
+      "video_watchs25": "Video Watches 25%",
+      "video_watchs50": "Video Watches 50%",
+      "video_watchs75": "Video Watches 75%",
+      "video_watchs100": "Video Watches 100%",
+      "campaign_peformance": "Campaign Peformance"
+    } 
+  }
+}

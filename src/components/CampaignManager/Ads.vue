@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-tab title="Campaign" @click="backCampaign"></b-tab>
-    <b-tab title="AdGroups" @click="backAdGroups"></b-tab>
-    <b-tab title="Ads" active>
+    <b-tab :title="$t('campaign.campaign')" @click="backCampaign"></b-tab>
+    <b-tab :title="$t('campaign.ad_groups')" @click="backAdGroups"></b-tab>
+    <b-tab :title="$t('campaign.ads')" active>
       <b-card-text>
         <div class="fs-13">
           <div v-if="!this.items" class="progress-cir">
@@ -65,7 +65,7 @@ export default {
   methods: {
     fetchItemList() {
       this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+ this.$route.params.idcampaign +'/adgroups/'+ this.$route.params.idadgroup + '/ads', this.$session.get('listAccount')).then(response => {
-          this.items = response.body
+          this.items = response.body.performance
         }, error => {
           console.log(error)
       });
@@ -97,63 +97,77 @@ export default {
       fields: [
         {
           key: 'status',
+          label: this.$t("campaign.table.status"),
           sortable: true
         },
         {
           key: 'ad_id',
-          label: 'Ad ID',
+          label: this.$t("campaign.table.ad_id"),
           sortable: true
         },
         {
           key: 'ad_name',
+          label: this.$t("campaign.table.ad_name"),
           sortable: true
         },
         {
           key: 'link_preview',
+          label: this.$t("campaign.table.creative_preview"),
           label: 'Creative Preview'
         },
         {
           key: 'delivery_status',
+          label: this.$t("campaign.table.delivery_status"),
           sortable: true
         },
         {
           key: 'period_budget',
+          label: this.$t("campaign.table.period_budget"),
           sortable: true
         },
         {
           key: 'period_from',
+          label: this.$t("campaign.table.period_from"),
           sortable: true
         },
         {
           key: 'period_to',
+          label: this.$t("campaign.table.period_to"),
           sortable: true
         },
         {
           key: 'total_clicks',
+          label: this.$t("campaign.table.clicks"),
           sortable: true
         },
         {
           key: 'total_costs',
+          label: this.$t("campaign.table.costs"),
           sortable: true
         },
         {
           key: 'total_views',
+          label: this.$t("campaign.table.views"),
           sortable: true
         },
         {
           key: 'total_25per_completions',
+          label: this.$t("campaign.table.total_25per"),
           sortable: true
         },
         {
           key: 'total_50per_completions',
+          label: this.$t("campaign.table.total_50per"),
           sortable: true
         },
         {
           key: 'total_75per_completions',
+          label: this.$t("campaign.table.total_75per"),
           sortable: true
         },
         {
           key: 'total_100per_completions',
+          label: this.$t("campaign.table.total_100per"),
           sortable: true
         }
       ]

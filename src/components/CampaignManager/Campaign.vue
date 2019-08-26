@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-tab title="Campaign" active>
+    <b-tab :title="$t('campaign.campaign')" active>
     <b-card-text>
       <div class="fs-13">
         <div v-if="!this.items" class="progress-cir">
@@ -20,7 +20,7 @@
             </router-link>
           </div>
           <div slot="chart" slot-scope="data" >
-            <b-button @click="reportCampaign(data.item.campaign_id)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">Chart</b-button>
+            <b-button @click="reportCampaign(data.item.campaign_id)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">{{ $t('campaign.table.chart') }}</b-button>
             <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
@@ -45,7 +45,7 @@ export default {
   methods: {
     fetchItemList() {
       this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns', this.$session.get('listAccount')).then(response => {
-          this.items = response.body
+          this.items = response.body.performance
         }, error => {
           console.log(error)
       });
@@ -57,16 +57,17 @@ export default {
     fetchReportCampaign(id, select) {
       this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+id+'/'+select, this.$session.get('listAccount')).then(response => {
           var clicks=[], views=[], total_25per=[], total_50per=[], total_75per=[], total_100per=[], date=[]
-          for(let i=0; i<response.body.length; i++)
+          for(let i=0; i<response.body.performance.length; i++)
           {
-            clicks.push(response.body[i].total_clicks)
-            views.push(response.body[i].total_views)
-            total_25per.push(response.body[i].total_25per_completions)
-            total_50per.push(response.body[i].total_50per_completions)
-            total_75per.push(response.body[i].total_75per_completions)
-            total_100per.push(response.body[i].total_100per_completions)
-            date.push(response.body[i].date)
+            clicks.push(response.body.performance[i].total_clicks)
+            views.push(response.body.performance[i].total_views)
+            total_25per.push(response.body.performance[i].total_25per_completions)
+            total_50per.push(response.body.performance[i].total_50per_completions)
+            total_75per.push(response.body.performance[i].total_75per_completions)
+            total_100per.push(response.body.performance[i].total_100per_completions)
+            date.push(response.body.performance[i].date)
           }
+          console.log(response.body.performance);
           var series = [
             {
               name: 'Click',
@@ -162,52 +163,57 @@ export default {
       fields: [
         {
           key: 'status',
+          label: this.$t("campaign.table.status"),
           sortable: true
         },
         {
           key: 'campaign_id',
-          label: 'ID',
+          label: this.$t("campaign.table.id"),
           sortable: true
         },
         {
           key: 'campaign_name',
-          label: 'Campaign Name',
+          label: this.$t("campaign.table.campaign_name"),
           sortable: true
         },
         {
           key: 'total_clicks',
-          label: 'Clicks',
+          label: this.$t("campaign.table.clicks"),
           sortable: true
         },
         {
           key: 'total_views',
-          label: 'Views',
+          label: this.$t("campaign.table.views"),
           sortable: true
         },
         {
           key: 'total_costs',
-          label: 'Costs',
+          label: this.$t("campaign.table.costs"),
           sortable: true
         },
         {
           key: 'delivery_status',
+          label: this.$t("campaign.table.delivery_status"),
           sortable: true
         },
         {
           key: 'kpi',
-          label: 'KPI',
+          label: this.$t("campaign.table.kpi"),
           sortable: true
         },
         {
           key: 'period_from',
+          label: this.$t("campaign.table.period_from"),
           sortable: true
         },
         {
           key: 'period_to',
+          label: this.$t("campaign.table.period_to"),
           sortable: true
         },
         {
-          key: 'chart'
+          key: 'chart',
+          label: this.$t("campaign.table.chart")
         }
       ],
       items: null

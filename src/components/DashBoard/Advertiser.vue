@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h2 class="m-50p text-center">Advertiser Manager</h2>
+    <h2 class="m-50p text-center">{{ $t('advertiser.title') }}</h2>
     <div class="m-50p fs-13 w-50 m-auto">
       <div class="d-flex">
-        <v-text-field :placeholder="'Account advertiser'" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
-        <v-btn class="btn-add-acount" @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>Add
+        <v-text-field :placeholder="$t('advertiser.account_advertiser')" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
+        <v-btn class="btn-add-acount" @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>{{ $t('advertiser.add') }}
           <v-icon dark right>add</v-icon>
         </v-btn>
       </div>
       <b-table sticky-header="450px" head-variant="light" class="text-nowrap" small bordered responsive :items="items" :fields="fields">
         <div slot="acction" slot-scope="data">
-          <b-modal :id="'modal-center-' + data.item.email" hide-footer ref="modal" title="Edit Account">
+          <b-modal :id="'modal-center-' + data.item.email" hide-footer ref="modal" :title="$t('advertiser.edit_account')">
             <v-text-field v-model="emailEdit" @keyup.enter="updateEmail"></v-text-field>
             <div class="f-right">
               <v-btn small color="primary" dark @click="updateEmail">
-                <v-icon dark left>check_circle</v-icon>Update
+                <v-icon dark left>check_circle</v-icon>{{ $t("advertiser.update") }}
               </v-btn>
               <v-btn small color="red" dark @click="closeModal">
-                <v-icon dark left>remove_circle</v-icon>Cancel
+                <v-icon dark left>remove_circle</v-icon>{{ $t("advertiser.cancel") }}
               </v-btn>
             </div>
           </b-modal>
@@ -116,10 +116,12 @@ export default {
       fields: [
         {
           key: 'email',
+          lable: this.$t("advertiser.email"),
           sortable: true
         },
         {
           key: 'acction',
+          lable: this.$t("advertiser.action"),
           class: 'w-25'
         }
       ],

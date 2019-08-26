@@ -6,14 +6,14 @@
       </div>
       <div id="error-msg">{{ msgErrors }}</div>
       <div class="form-group">
-        <label class="font-weight-bold">Email address</label>
-        <input type="email" v-model="user.email" class="form-control fs-13" aria-describedby="emailHelp" placeholder="Enter email">
+        <label class="font-weight-bold">{{ $t('login.email_address') }}</label>
+        <input type="email" v-model="user.email" class="form-control fs-13" aria-describedby="emailHelp" :placeholder="$t('login.enter_email')">
       </div>
       <div class="form-group">
-        <label class="font-weight-bold">Password</label>
-        <input v-model="user.password" @keyup.enter="login" type="password" class="form-control fs-13" placeholder="Password">
+        <label class="font-weight-bold">{{ $t('login.password') }}</label>
+        <input v-model="user.password" @keyup.enter="login" type="password" class="form-control fs-13" :placeholder="$t('login.password')">
       </div>
-      <button @click="login" class="btn btn-primary fs-13 w-100">Log in</button>
+      <button @click="login" class="btn btn-primary fs-13 w-100">{{ $t('login.btn_login') }}</button>
     </div>
   </div>
 </template>

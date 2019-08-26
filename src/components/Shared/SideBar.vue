@@ -10,7 +10,7 @@ export default {
       menu: [
         {
           href: '/campaign-manager',
-          title: 'Campaign Manager',
+          title: this.$t("sidebar.campaign_manager"),
           icon: 'fa fa-chart-area',
           // child: [
           //   {
@@ -21,12 +21,12 @@ export default {
         },
         {
           href: '/advertiser',
-          title: 'Advertisers dashboard',
+          title: this.$t("sidebar.advertisers"),
           icon: 'fab fa-app-store-ios'
         },
         {
           href: '/',
-          title: 'User Account',
+          title: this.$t("sidebar.user_account"),
           icon: 'fa fa-user'
         }
       ]
