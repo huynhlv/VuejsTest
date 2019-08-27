@@ -38,14 +38,15 @@
 
 <script>
 import {Chart} from 'highcharts-vue'
+import CampaignApi from '../../api/CampaignApi'
 export default {
   created() {
     this.fetchItemList()
   },
   methods: {
     fetchItemList() {
-      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns', this.$session.get('listAccount')).then(response => {
-          this.items = response.body.performance
+      CampaignApi.getReportCampaign(this.$session.get('listAccount')).then(response => {
+          this.items = response.data.performance
         }, error => {
           console.log(error)
       });
@@ -55,19 +56,20 @@ export default {
       this.fetchReportCampaign(id, 'report-today')
     },
     fetchReportCampaign(id, select) {
-      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+id+'/'+select, this.$session.get('listAccount')).then(response => {
+      CampaignApi.getReportChart(id, select, this.$session.get('listAccount')).then(response => {
           var clicks=[], views=[], total_25per=[], total_50per=[], total_75per=[], total_100per=[], date=[]
-          for(let i=0; i<response.body.performance.length; i++)
+          var { data } = response
+          for(let i=0; i<data.performance.length; i++)
           {
-            clicks.push(response.body.performance[i].total_clicks)
-            views.push(response.body.performance[i].total_views)
-            total_25per.push(response.body.performance[i].total_25per_completions)
-            total_50per.push(response.body.performance[i].total_50per_completions)
-            total_75per.push(response.body.performance[i].total_75per_completions)
-            total_100per.push(response.body.performance[i].total_100per_completions)
-            date.push(response.body.performance[i].date)
+            clicks.push(data.performance[i].total_clicks)
+            views.push(data.performance[i].total_views)
+            total_25per.push(data.performance[i].total_25per_completions)
+            total_50per.push(data.performance[i].total_50per_completions)
+            total_75per.push(data.performance[i].total_75per_completions)
+            total_100per.push(data.performance[i].total_100per_completions)
+            date.push(data.performance[i].date)
           }
-          console.log(response.body.performance);
+          console.log(data.performance);
           var series = [
             {
               name: 'Click',

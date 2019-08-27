@@ -19,7 +19,7 @@
 </template>
 <script>
 
-import Vue from 'vue'
+import AccountApi from '../../api/AccountApi'
 export default {
   data() {
     return {
@@ -68,21 +68,7 @@ export default {
           "hanna.kub@bahringer.biz",
           "hauck.lue@hotmail.com",
           "heidenreich.otho@gmail.com",
-          "ignacio06@gmail.com",
-          "jframi@rippin.com",
-          "jocelyn.considine@hotmail.com",
-          "karlee29@gmail.com",
-          "kendra.ruecker@gleichner.info",
-          "kozey.myrna@kerluke.org",
-          "kreiger.fredy@homenick.net",
-          "ksipes@gerlach.biz",
-          "lehner.domenico@white.com",
-          "xfritsch@mosciski.com",
-          "xharvey@hotmail.com",
-          "yquigley@kuvalis.com",
-          "zemlak.giles@gmail.com",
-          "ziemann.ernestine@gmail.com",
-          "zstark@hotmail.com",
+          "ignacio06@gmail.com"
         ]
       },
       msgErrors: ''
@@ -91,17 +77,17 @@ export default {
   methods: {
     login() {
       this.$loading(true)
-      this.$http.post('https://sherpa-api-huynhlv.herokuapp.com/api/sessions', this.user).then(response => {
-        if(response.status === 200 && 'auth_token' in response.body) {
+      AccountApi.login(this.user).then(response => {
+        if(response.status === 200 && 'auth_token' in response.data) {
           this.$session.start()
-          this.$session.set('auth_token', response.body.auth_token)
+          this.$session.set('auth_token', response.data.auth_token)
           this.$session.set('listAccount', this.listAccount)
           this.$loading(false)
           this.$router.push('/campaign-manager')
         }
       }, error => {
         this.$loading(false)
-        this.msgErrors = error.body.errors
+        this.msgErrors = error.data.errors
         document.getElementById('error-msg').className = "alert alert-danger";
       });
     }

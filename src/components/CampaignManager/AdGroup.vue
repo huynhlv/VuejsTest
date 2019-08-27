@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import CampaignApi from '../../api/CampaignApi'
 export default {
   created() {
     this.fetchItemList()
@@ -36,8 +37,8 @@ export default {
       this.$router.push('/campaign-manager')
     },
     fetchItemList() {
-      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+ this.$route.params.idcampaign +'/adgroups', this.$session.get('listAccount')).then(response => {
-          this.items = response.body.performance
+      CampaignApi.getReportAdGroup(this.$route.params.idcampaign, this.$session.get('listAccount')).then(response => {
+          this.items = response.data.performance
         }, error => {
           console.log(error)
       });

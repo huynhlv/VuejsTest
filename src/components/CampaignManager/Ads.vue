@@ -58,14 +58,15 @@
 </template>
 <script>
 import { VueClazyLoad } from 'vue-clazy-load'
+import CampaignApi from '../../api/CampaignApi'
 export default {
   created() {
     this.fetchItemList()
   },
   methods: {
     fetchItemList() {
-      this.$http.post('http://ad-tech-dac.herokuapp.com/api/social_accounts/campaigns/'+ this.$route.params.idcampaign +'/adgroups/'+ this.$route.params.idadgroup + '/ads', this.$session.get('listAccount')).then(response => {
-          this.items = response.body.performance
+      CampaignApi.getReportAds(this.$route.params.idcampaign, this.$route.params.idadgroup, this.$session.get('listAccount')).then(response => {
+          this.items = response.data.performance
         }, error => {
           console.log(error)
       });

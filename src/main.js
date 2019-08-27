@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
-import VueResource from 'vue-resource';
 import VueRouter from 'vue-router'
 import VueLoading from 'vuejs-loading-plugin'
 import VueClazyLoad from 'vue-clazy-load'
@@ -23,10 +22,8 @@ Vue.use(VueSession)
 Vue.use(VueSidebarMenu)
 Vue.use(Vuetify)
 Vue.use(BootstrapVue)
-Vue.use(VueResource);
 Vue.use(VueRouter)
 Vue.use(VueLoading)
-// Vue.http.options.root = 'https://sherpa-api-huynhlv.herokuapp.com/api/'
 HighchartsNoData(Highcharts);
 Vue.config.productionTip = false
 
