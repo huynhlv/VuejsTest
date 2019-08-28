@@ -8,6 +8,7 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 import Highcharts from 'highcharts'
 import HighchartsNoData from 'highcharts-no-data-to-display'
 import Vuetify from 'vuetify'
+import VueSwal from 'vue-swal'
 import App from './App'
 import i18n from './lang/i18n.js'
 import { routes } from './routes.js'
@@ -17,6 +18,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(VueSwal)
 Vue.use(VueClazyLoad)
 Vue.use(VueSession)
 Vue.use(VueSidebarMenu)

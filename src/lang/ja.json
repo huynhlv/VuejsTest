@@ -4,6 +4,11 @@
     "logout": "ログアウト",
     "admin": "管理者"
   },
+  "validate": {
+    "required": "必須",
+    "email": "無効なメール",
+    "max_50_char": "最大50文字"
+  },
   "login": {
     "email_address": "電子メールアドレス",
     "enter_email": "メールアドレスを入力して",

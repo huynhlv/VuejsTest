@@ -2,12 +2,21 @@
   <div>
     <h2 class="m-50p text-center">{{ $t('advertiser.title') }}</h2>
     <div class="m-50p fs-13 w-50 m-auto">
-      <div class="d-flex">
-        <v-text-field :placeholder="$t('advertiser.account_advertiser')" v-model="emailNew" @keyup.enter="addAccount"></v-text-field>
-        <v-btn class="btn-add-acount" @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>{{ $t('advertiser.add') }}
-          <v-icon dark right>add</v-icon>
-        </v-btn>
-      </div>
+      <v-form ref="form" >
+        <div class="d-flex">
+          <v-text-field
+            v-model="emailNew"
+            @keyup.enter="addAccount"
+            :rules="rules"
+            :counter="50"
+            :label="$t('advertiser.account_advertiser')"
+            required
+          ></v-text-field>
+          <v-btn class="btn-add-acount" @click="addAccount" v-b-modal.modal-prevent-closing small color="primary" dark>{{ $t('advertiser.add') }}
+            <v-icon dark right>add</v-icon>
+          </v-btn>
+        </div>
+      </v-form>
       <b-table sticky-header="450px" head-variant="light" class="text-nowrap" small bordered responsive :items="items" :fields="fields">
         <div slot="acction" slot-scope="data">
           <b-modal :id="'modal-center-' + data.item.email" hide-footer ref="modal" :title="$t('advertiser.edit_account')">
@@ -46,12 +55,15 @@ export default {
     this.getAccountAdvertiser()
   },
   methods: {
+    getAccountFromLocal() {
+      return this.$session.get('listAccount').advertiserEmails
+    },
     editItem(item) {
       this.emailEdit = item
       this.indexEmail = this.findIndexArr(item)
     },
     findIndexArr(item) {
-      var data = this.$session.get('listAccount').advertiserEmails
+      var data = this.getAccountFromLocal()
       return data.findIndex(k => k==item)
     },
     closeModal() {
@@ -60,7 +72,7 @@ export default {
       })
     },
     getAccountAdvertiser() {
-      let data = this.$session.get('listAccount').advertiserEmails
+      let data = this.getAccountFromLocal()
       this.items = this.parseData(data)
     },
     parseData(data) {
@@ -74,9 +86,11 @@ export default {
       return emailArray
     },
     addAccount() {
-      var data = this.$session.get('listAccount').advertiserEmails
+      if(!this.$refs.form.validate()) return
+      var data = this.getAccountFromLocal()
       data.unshift(this.emailNew)
       this.updateListAccount(data)
+      this.$swal("Success!", "Add account success!", "success")
     },
     updateListAccount(data) {
       let listAccount = {
@@ -87,16 +101,18 @@ export default {
       this.getAccountAdvertiser()
     },
     updateEmail() {
-      var data = this.$session.get('listAccount').advertiserEmails
+      var data = this.getAccountFromLocal()
       data[this.indexEmail] = this.emailEdit
       this.updateListAccount(data)
       this.closeModal()
+      this.$swal("Success!", "Update account success!", "success")
     },
     deleteItem(item) {
       if (confirm('Are you sure you want to delete this account?')) {
-        var data = this.$session.get('listAccount').advertiserEmails
+        var data = this.getAccountFromLocal()
         data.splice(this.findIndexArr(item), 1)
         this.updateListAccount(data)
+        this.$swal("Success!", "Delete account success!", "success")
       }
     }
   },
@@ -106,11 +122,11 @@ export default {
       emailEdit: '',
       indexEmail: -1,
       rules: [
-        value => !!value || 'Required.',
-        value => (value || '').length <= 50 || 'Max 50 characters',
+        value => !!value || this.$t("validate.required"),
+        value => (value || '').length <= 50 || this.$t("validate.max_50_char"),
         value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
+          return pattern.test(value) || this.$t("validate.email")
         },
       ],
       fields: [

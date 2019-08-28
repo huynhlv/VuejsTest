@@ -4,6 +4,11 @@
     "logout": "Logout",
     "admin": "Admin"
   },
+  "validate": {
+    "required": "Required.",
+    "email": "Invalid e-mail.",
+    "max_50_char": "Max 50 characters"
+  },
   "login": {
     "email_address": "Email address",
     "enter_email": "Enter Email",
