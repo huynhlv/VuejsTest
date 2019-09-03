@@ -82,7 +82,7 @@ html, body {
 .nav-left {
   position: absolute;
   top: 3%;
-  left: 92%;
+  left: 90%;
 }
 
 .slect-chart-report {
@@ -114,4 +114,8 @@ html, body {
 
 .profile {
   margin-left: -55px;
+}
+
+#no-data {
+  display: none;
 }

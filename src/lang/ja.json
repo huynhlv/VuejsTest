@@ -30,6 +30,9 @@
     "update": "更新",
     "cancel": "キャンセル"
   },
+  "data": {
+    "no_data": "データなし"
+  },
   "campaign": {
     "campaign_manager": "キャンペーンマネージャー",
     "campaign": "キャンペーン",

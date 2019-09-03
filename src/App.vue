@@ -27,7 +27,7 @@ export default {
     return {
       languages: [
         { language: 'en', title: 'English' },
-        { language: 'ja', title: '日本人' }
+        { language: 'ja', title: '日本語' }
       ]
     };
   },

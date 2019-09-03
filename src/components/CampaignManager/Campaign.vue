@@ -30,6 +30,7 @@
             </b-modal>
           </div>
         </b-table>
+        <div id="no-data">{{ $t('data.no_data') }}</div>
       </div>
     </b-card-text>
   </b-tab>
@@ -48,8 +49,13 @@ export default {
       CampaignApi.getReportCampaign(this.$session.get('listAccount')).then(response => {
           this.items = response.data.performance
         }, error => {
+          this.checkDataTable()
           console.log(error)
       });
+    },
+    checkDataTable() {
+      this.items = []
+      document.getElementById('no-data').style.display = "block"
     },
     reportCampaign(id) {
       this.selected = 1

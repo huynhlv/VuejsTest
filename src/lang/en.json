@@ -30,6 +30,9 @@
     "update": "Update",
     "cancel": "Cancel"
   },
+  "data": {
+    "no_data": "No Data!"
+  },
   "campaign": {
     "campaign_manager": "Campaign Manager",
     "campaign": "Campaign",
