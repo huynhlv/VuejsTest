@@ -15,12 +15,12 @@
             <b-form-checkbox v-else switch></b-form-checkbox>
           </div>
           <div slot="campaign_name" slot-scope="data" >
-            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_id }" class="link-a">
+            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_name }" class="link-a">
               {{ data.value }}
             </router-link>
           </div>
           <div slot="chart" slot-scope="data" >
-            <b-button @click="reportCampaign(data.item.campaign_id)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">{{ $t('campaign.table.chart') }}</b-button>
+            <b-button @click="reportCampaign(data.item.campaign_name)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">{{ $t('campaign.table.chart') }}</b-button>
             <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
@@ -46,8 +46,35 @@ export default {
   },
   methods: {
     fetchItemList() {
-      CampaignApi.getReportCampaign(this.$session.get('listAccount')).then(response => {
-          this.items = response.data.performance
+      CampaignApi.getCampaignMedia(this.$session.get('listAccount')).then(response => {
+          var data = response.data
+          var arrData = []
+          for(let i=0; i<data.length; i++) {
+            for(let j=0; j<data[i].length; j++) {
+              arrData.push(data[i][j])
+            }
+          }
+          this.dataCampaign = arrData
+          let campaign_names = []
+          for(let i=0; i<data.length; i++){
+            campaign_names.push(data[i].campaign_name)
+          }
+          let obcampaignNames = {
+            "campaignNames": campaign_names
+          }
+          this.fetchReportCampaign(obcampaignNames)
+        }, error => {
+          this.checkDataTable()
+          console.log(error)
+      });
+    },
+    fetchReportCampaign(campaign_names) {
+      CampaignApi.getReportCampaign(campaign_names).then(response => {
+          let arrAllItem = []
+          for(let i=0; i<this.dataCampaign.length; i++){
+            arrAllItem.push(Object.assign({}, response.data.performance[i], this.dataCampaign[i]))
+          }
+          this.items = arrAllItem
         }, error => {
           this.checkDataTable()
           console.log(error)
@@ -57,12 +84,12 @@ export default {
       this.items = []
       document.getElementById('no-data').style.display = "block"
     },
-    reportCampaign(id) {
+    reportCampaign(campaign_name) {
       this.selected = 1
-      this.fetchReportCampaign(id, 'report-today')
+      this.fetchReportChart(campaign_name, 'report-today')
     },
-    fetchReportCampaign(id, select) {
-      CampaignApi.getReportChart(id, select, this.$session.get('listAccount')).then(response => {
+    fetchReportChart(campaign_name, select) {
+      CampaignApi.getReportChart(campaign_name, select).then(response => {
           var clicks=[], views=[], total_25per=[], total_50per=[], total_75per=[], total_100per=[], date=[]
           var { data } = response
           for(let i=0; i<data.performance.length; i++)
@@ -114,16 +141,16 @@ export default {
           console.log(error)
       });
     },
-    selectDate(id) {
+    selectDate(campaign_name) {
       switch (this.selected) {
         case 2:
-          this.fetchReportCampaign(id, 'report-this-week')
+          this.fetchReportChart(campaign_name, 'report-this-week')
           break
         case 3:
-          this.fetchReportCampaign(id, 'report-this-month')
+          this.fetchReportChart(campaign_name, 'report-this-month')
           break
         default:
-          this.fetchReportCampaign(id, 'report-today')
+          this.fetchReportChart(campaign_name, 'report-today')
           break
       }
     }
@@ -139,6 +166,7 @@ export default {
           "erdman.jacey@lakin.biz"
         ]
       },
+      dataCampaign: null,
       selected: 1,
       options: [
         { value: 1, text: 'Today'},
@@ -175,13 +203,43 @@ export default {
           sortable: true
         },
         {
-          key: 'campaign_id',
+          key: 'id',
           label: this.$t("campaign.table.id"),
           sortable: true
         },
         {
           key: 'campaign_name',
           label: this.$t("campaign.table.campaign_name"),
+          sortable: true
+        },
+        {
+          key: 'media_name',
+          label: this.$t("campaign.table.media_name"),
+          sortable: true
+        },
+        {
+          key: 'delivery_status',
+          label: this.$t("campaign.table.delivery_status"),
+          sortable: true
+        },
+        {
+          key: 'object_name',
+          label: this.$t("campaign.table.object_name"),
+          sortable: true
+        },
+        {
+          key: 'budget_type',
+          label: this.$t("campaign.table.budget_type"),
+          sortable: true
+        },
+        {
+          key: 'campaign_period_budget',
+          label: this.$t("campaign.table.campaign_period_budget"),
+          sortable: true
+        },
+        {
+          key: 'std_daily_budget',
+          label: this.$t("campaign.table.std_daily_budget"),
           sortable: true
         },
         {
@@ -197,11 +255,6 @@ export default {
         {
           key: 'total_costs',
           label: this.$t("campaign.table.costs"),
-          sortable: true
-        },
-        {
-          key: 'delivery_status',
-          label: this.$t("campaign.table.delivery_status"),
           sortable: true
         },
         {
