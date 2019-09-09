@@ -15,7 +15,7 @@
             <b-form-checkbox v-else switch></b-form-checkbox>
           </div>
           <div slot="campaign_name" slot-scope="data" >
-            <router-link tag="span" :to="{ path: 'campaign-manager/' + data.item.campaign_name }" class="link-a">
+            <router-link tag="span" :to="{ path: `campaign-manager/${data.item.id}/${data.item.campaign_name}`}" class="link-a">
               {{ data.value }}
             </router-link>
           </div>
@@ -24,7 +24,7 @@
             <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
-                <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate(data.item.campaign_id)"></b-form-select>
+                <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate(data.item.name)"></b-form-select>
               </div>
               <Chart :options="chartOptions" />
             </b-modal>
@@ -47,7 +47,25 @@ export default {
   methods: {
     fetchItemList() {
       CampaignApi.getCampaignMedia(this.$session.get('listAccount')).then(response => {
-          var data = response.data
+          // var data = response.data
+          var data = [
+            [
+              {
+                "status": 1,
+                "id": 26,
+                "name": "Emmy Leuschke",
+                "media_name": "fsdfsd",
+                "delivery_status": "fxcv",
+                "object_name": "rưe",
+                "budget_type": "nv",
+                "campaign_period_budget": "ytr",
+                "std_daily_budget": "cxvx",
+                "kpi": "gfd",
+                "period_from": "bcvbc",
+                "period_to": "bcvbcv"
+              }
+            ]
+          ]
           var arrData = []
           for(let i=0; i<data.length; i++) {
             for(let j=0; j<data[i].length; j++) {
@@ -57,7 +75,9 @@ export default {
           this.dataCampaign = arrData
           let campaign_names = []
           for(let i=0; i<data.length; i++){
-            campaign_names.push(data[i].campaign_name)
+            for(let j=0; j<data[i].length; j++){
+              campaign_names.push(data[i][j].name)
+            }
           }
           let obcampaignNames = {
             "campaignNames": campaign_names
@@ -72,7 +92,7 @@ export default {
       CampaignApi.getReportCampaign(campaign_names).then(response => {
           let arrAllItem = []
           for(let i=0; i<this.dataCampaign.length; i++){
-            arrAllItem.push(Object.assign({}, response.data.performance[i], this.dataCampaign[i]))
+            arrAllItem.push(Object.assign({}, response.data[i], this.dataCampaign[i]))
           }
           this.items = arrAllItem
         }, error => {
@@ -91,18 +111,17 @@ export default {
     fetchReportChart(campaign_name, select) {
       CampaignApi.getReportChart(campaign_name, select).then(response => {
           var clicks=[], views=[], total_25per=[], total_50per=[], total_75per=[], total_100per=[], date=[]
-          var { data } = response
-          for(let i=0; i<data.performance.length; i++)
+          var { performance } = response.data
+          for(let i=0; i<performance.length; i++)
           {
-            clicks.push(data.performance[i].total_clicks)
-            views.push(data.performance[i].total_views)
-            total_25per.push(data.performance[i].total_25per_completions)
-            total_50per.push(data.performance[i].total_50per_completions)
-            total_75per.push(data.performance[i].total_75per_completions)
-            total_100per.push(data.performance[i].total_100per_completions)
-            date.push(data.performance[i].date)
+            clicks.push(performance[i].total_clicks)
+            views.push(performance[i].total_views)
+            total_25per.push(performance[i].total_25per_completions)
+            total_50per.push(performance[i].total_50per_completions)
+            total_75per.push(performance[i].total_75per_completions)
+            total_100per.push(performance[i].total_100per_completions)
+            date.push(performance[i].date)
           }
-          console.log(data.performance);
           var series = [
             {
               name: 'Click',
@@ -208,7 +227,7 @@ export default {
           sortable: true
         },
         {
-          key: 'campaign_name',
+          key: 'name',
           label: this.$t("campaign.table.campaign_name"),
           sortable: true
         },

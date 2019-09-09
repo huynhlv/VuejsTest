@@ -37,9 +37,29 @@ export default {
       this.$router.push('/campaign-manager')
     },
     fetchItemList() {
-      CampaignApi.getReportAdGroup(this.$route.params.idcampaign, this.$session.get('listAccount')).then(response => {
-          this.items = response.data.performance
+      CampaignApi.getAdgroupMedia(this.$route.params.idcampaign, this.$session.get('listAccount')).then(response => {
+          var data = response.data
+          var arrData = []
+          for(let i=0; i<data.length; i++) {
+            for(let j=0; j<data[i].length; j++) {
+              arrData.push(data[i][j])
+            }
+          }
+          this.dataAdgroup = arrData
+          this.fetchReportAdgroup(this.$route.params.namecampaign)
         }, error => {
+          console.log(error)
+      });
+    },
+    fetchReportAdgroup(namecampaign) {
+      CampaignApi.getReportAdgroup(namecampaign).then(response => {
+          let arrAllItem = []
+          for(let i=0; i<this.dataAdgroup.length; i++){
+            arrAllItem.push(Object.assign({}, response.data.performance[i], this.dataAdgroup[i]))
+          }
+          this.items = arrAllItem
+        }, error => {
+          this.checkDataTable()
           console.log(error)
       });
     }
@@ -47,6 +67,7 @@ export default {
   data() {
     return {
       items: null,
+      dataAdgroup: null,
       fields: [
         {
           key: 'status',
@@ -54,12 +75,12 @@ export default {
           sortable: true
         },
         {
-          key: 'adgroup_id',
+          key: 'id',
           label: this.$t("campaign.table.id"),
           sortable: true
         },
         {
-          key: 'adgroup_name',
+          key: 'name',
           label: this.$t("campaign.table.ag_name"),
           sortable: true
         },
@@ -79,8 +100,33 @@ export default {
           sortable: true
         },
         {
-          key: 'period_budget',
-          label: this.$t("campaign.table.period_budget"),
+          key: 'ag_period_budget',
+          label: this.$t("campaign.table.campaign_period_budget"),
+          sortable: true
+        },
+        {
+          key: 'std_daily_budget',
+          label: this.$t("campaign.table.std_daily_budget"),
+          sortable: true
+        },
+        {
+          key: 'std_bidding_amount',
+          label: this.$t("campaign.table.std_bidding_amount"),
+          sortable: true
+        },
+        {
+          key: 'std_bidding_method_name',
+          label: this.$t("campaign.table.std_bidding_method_name"),
+          sortable: true
+        },
+        {
+          key: 'ag_period_budget_from',
+          label: this.$t("campaign.table.period_budget_from"),
+          sortable: true
+        },
+        {
+          key: 'ag_period_budget_to',
+          label: this.$t("campaign.table.ag_period_budget_to"),
           sortable: true
         },
         {

@@ -10,7 +10,7 @@ export const routes = [
   { path: '/', name: 'dashboard', component: DashBoard, children: [
     { path: '/campaign-manager', name: 'campaign-manager', component: CampaignManager, children: [
       { path: '', name: 'campaign', component: Campaign },
-      { path: ':idcampaign', name: 'adgroups', component: AdGroup },
+      { path: ':idcampaign/:namecampaign', name: 'adgroups', component: AdGroup },
       { path: ':idcampaign/:idadgroup', name: 'ads', component: Ads }
     ] },
     { path: '/advertiser', name: 'advertiser', component: Advertiser },
