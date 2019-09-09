@@ -50,7 +50,7 @@ export default {
         }
       }, error => {
         this.$loading(false)
-        this.msgErrors = error.data.errors
+        this.msgErrors = error.response.data.errors
         document.getElementById('error-msg').className = "alert alert-danger";
       });
     }
