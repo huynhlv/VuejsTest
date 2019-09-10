@@ -15,8 +15,8 @@
               <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
               <b-form-checkbox v-else switch></b-form-checkbox>
             </template>
-            <template slot="adgroup_name" slot-scope="data" >
-              <router-link tag="span" :to="{ path: $route.params.idcampaign + '/' + data.item.adgroup_id }" class="link-a">
+            <template slot="name" slot-scope="data" >
+              <router-link tag="span" :to="{ path: `${$route.params.namecampaign}/${data.item.id}/${data.item.name}`}" class="link-a">
                 {{ data.value }}
               </router-link>
             </template>
@@ -54,8 +54,46 @@ export default {
     fetchReportAdgroup(namecampaign) {
       CampaignApi.getReportAdgroup(namecampaign).then(response => {
           let arrAllItem = []
+          let performance = response.data.performance
+          performance = [
+            {
+                "ad_group_name": "Dr. Lowell Collier",
+                "total_clicks": 1990,
+                "total_views": 4841,
+                "total_costs": 15530516,
+                "total_25per_completions": 500,
+                "total_50per_completions": 1000,
+                "total_75per_completions": 1500,
+                "total_100per_completions": 2000,
+                "total_skips": 1808
+            },
+            {
+                "ad_group_name": "Edgardo Kerluke",
+                "total_clicks": 1730,
+                "total_views": 4144,
+                "total_costs": 121866477,
+                "total_25per_completions": 500,
+                "total_50per_completions": 1000,
+                "total_75per_completions": 1500,
+                "total_100per_completions": 2000,
+                "total_skips": 2186
+            }
+          ]
           for(let i=0; i<this.dataAdgroup.length; i++){
-            arrAllItem.push(Object.assign({}, response.data.performance[i], this.dataAdgroup[i]))
+            let performance_index = null
+            let performance_current = null
+            for(let j=0; j<performance.length; j++){
+              if(this.dataAdgroup[i].name == performance[j].ad_group_name) {
+                performance_index = j
+                break
+              }
+            }
+            if(performance_index != null) {
+              performance_current = performance[performance_index]
+            }else{
+              performance_current = this.not_performance
+            }
+            arrAllItem.push(Object.assign({}, performance_current, this.dataAdgroup[i]))
           }
           this.items = arrAllItem
         }, error => {
@@ -68,6 +106,16 @@ export default {
     return {
       items: null,
       dataAdgroup: null,
+      not_performance: {
+        total_clicks: 0,
+        total_views: 0,
+        total_costs: 0,
+        total_25per_completions: 0,
+        total_50per_completions: 0,
+        total_75per_completions: 0,
+        total_100per_completions: 0,
+        total_skips: 0
+      },
       fields: [
         {
           key: 'status',
@@ -95,7 +143,7 @@ export default {
           sortable: true
         },
         {
-          key: 'delivery_status',
+          key: 'delivery_status_name',
           label: this.$t("campaign.table.delivery_status"),
           sortable: true
         },

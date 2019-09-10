@@ -29,9 +29,10 @@ export default {
       },
       listAccount: {
         advertiserEmails: [
-          "walsh.cale@hotmail.com",
-          "leonard20@hotmail.com",
-          "vivien06@ullrich.info"
+          "kassulke.helena@wehner.com",
+          "ned79@hessel.net",
+          "adaline21@yahoo.com",
+          "breynolds@heathcote.com"
         ]
       },
       msgErrors: ''

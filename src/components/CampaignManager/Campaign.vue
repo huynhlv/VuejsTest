@@ -14,14 +14,14 @@
             <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
             <b-form-checkbox v-else switch></b-form-checkbox>
           </div>
-          <div slot="campaign_name" slot-scope="data" >
-            <router-link tag="span" :to="{ path: `campaign-manager/${data.item.id}/${data.item.campaign_name}`}" class="link-a">
+          <div slot="name" slot-scope="data" >
+            <router-link tag="span" :to="{ path: `campaign-manager/${data.item.id}/${data.item.name}`}" class="link-a">
               {{ data.value }}
             </router-link>
           </div>
           <div slot="chart" slot-scope="data" >
-            <b-button @click="reportCampaign(data.item.campaign_name)" v-b-modal="'modal-center-' + data.item.campaign_id" variant="primary" size="sm">{{ $t('campaign.table.chart') }}</b-button>
-            <b-modal size="xl" :id="'modal-center-' + data.item.campaign_id" centered hide-footer title="HighChart">
+            <b-button @click="reportCampaign(data.item.name)" v-b-modal="'modal-center-' + data.item.id" variant="primary" size="sm">{{ $t('campaign.table.chart') }}</b-button>
+            <b-modal size="xl" :id="'modal-center-' + data.item.id" centered hide-footer title="HighChart">
               <div class="slect-chart-report col-4">
                 <span class="title">Report Date: </span>
                 <b-form-select v-model="selected" :options="options" size="sm" @change="selectDate(data.item.name)"></b-form-select>
@@ -47,25 +47,7 @@ export default {
   methods: {
     fetchItemList() {
       CampaignApi.getCampaignMedia(this.$session.get('listAccount')).then(response => {
-          // var data = response.data
-          var data = [
-            [
-              {
-                "status": 1,
-                "id": 26,
-                "name": "Emmy Leuschke",
-                "media_name": "fsdfsd",
-                "delivery_status": "fxcv",
-                "object_name": "rưe",
-                "budget_type": "nv",
-                "campaign_period_budget": "ytr",
-                "std_daily_budget": "cxvx",
-                "kpi": "gfd",
-                "period_from": "bcvbc",
-                "period_to": "bcvbcv"
-              }
-            ]
-          ]
+          var data = response.data
           var arrData = []
           for(let i=0; i<data.length; i++) {
             for(let j=0; j<data[i].length; j++) {
@@ -237,7 +219,7 @@ export default {
           sortable: true
         },
         {
-          key: 'delivery_status',
+          key: 'delivery_status_name',
           label: this.$t("campaign.table.delivery_status"),
           sortable: true
         },

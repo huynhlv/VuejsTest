@@ -11,7 +11,7 @@ export const routes = [
     { path: '/campaign-manager', name: 'campaign-manager', component: CampaignManager, children: [
       { path: '', name: 'campaign', component: Campaign },
       { path: ':idcampaign/:namecampaign', name: 'adgroups', component: AdGroup },
-      { path: ':idcampaign/:idadgroup', name: 'ads', component: Ads }
+      { path: ':idcampaign/:namecampaign/:idadgroup/:namegroup', name: 'ads', component: Ads }
     ] },
     { path: '/advertiser', name: 'advertiser', component: Advertiser },
   ] },
