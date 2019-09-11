@@ -11,8 +11,8 @@
         </div>
         <b-table v-else sticky-header="400px" head-variant="light" class="my-table text-nowrap" small bordered responsive :items="items" :fields="fields">
           <div slot="status" slot-scope="data" >
-            <b-form-checkbox v-if="data.value == '1'" checked='true' switch></b-form-checkbox>
-            <b-form-checkbox v-else switch></b-form-checkbox>
+            <b-form-checkbox v-if="data.value == '1'" checked='true' class="not-allow" switch disabled></b-form-checkbox>
+            <b-form-checkbox v-else class="not-allow" switch disabled></b-form-checkbox>
           </div>
           <div slot="name" slot-scope="data" >
             <router-link tag="span" :to="{ path: `campaign-manager/${data.item.id}/${data.item.name}`}" class="link-a">

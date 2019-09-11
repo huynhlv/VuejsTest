@@ -46,6 +46,7 @@
       "object_name": "オブジェクト名",
       "budget_type": "予算タイプ",
       "campaign_period_budget": "期間予算",
+      "cost_bidding": "費用入札",
       "std_daily_budget": "一日あたりの予算",
       "std_bidding_amount": "入札額",
       "std_bidding_method_name": "入札名",

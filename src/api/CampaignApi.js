@@ -7,14 +7,17 @@ export default {
   getAdgroupMedia(id, account) {
     return CallerMedia(`campaigns/${id}/ad-groups`, 'POST', account)
   },
+  getAdsMedia(id_campaign, id_adgroup, account) {
+    return CallerMedia(`campaigns/${id_campaign}/ad-groups/${id_adgroup}/ads`, 'POST', account)
+  },
   getReportCampaign(campaign_names) {
     return CallerPublicsher('campaigns', 'POST', campaign_names)
   },
   getReportAdgroup(namecampaign) {
     return CallerPublicsher(`campaigns/${namecampaign}/adgroups`)
   },
-  getReportAds(id_campaign, id_adgroup, account) {
-    return CallerPublicsher(`campaigns/${id_campaign}/adgroups/${id_adgroup}/ads`, 'POST', account)
+  getReportAds(namecampaign, nameadgroup) {
+    return CallerPublicsher(`campaigns/${namecampaign}/adgroups/${nameadgroup}/ads`)
   },
   getReportChart(campaignName, select) {
     return CallerPublicsher(`campaigns/${campaignName}/${select}`)
