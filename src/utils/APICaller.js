@@ -4,12 +4,15 @@ const baseUrlSherpa = 'https://sherpa-api-huynhlv.herokuapp.com/api'
 const baseUrlMedia = 'https://adtech2019.herokuapp.com/api'
 const baseUrlPublicsher = 'http://ad-tech-dac.herokuapp.com/api/social_accounts'
 
-export function CallerSherpa(endpoint, method = 'GET', body = {}) {
+export function CallerSherpa(endpoint, method = 'GET', body = {}, auth_token) {
   return axios(
     `${baseUrlSherpa}/${endpoint}`,
     {
       method: method,
-      data: body
+      data: body,
+      headers:{
+        'Authorization': auth_token
+      }
     })
 }
 

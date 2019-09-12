@@ -20,20 +20,13 @@
 <script>
 
 import AccountApi from '../../api/AccountApi'
+import AdvertiserApi from '../../api/AdvertiserApi'
 export default {
   data() {
     return {
       user: {
         email: '',
         password: ''
-      },
-      listAccount: {
-        advertiserEmails: [
-          "kassulke.helena@wehner.com",
-          "ned79@hessel.net",
-          "adaline21@yahoo.com",
-          "breynolds@heathcote.com"
-        ]
       },
       msgErrors: ''
     }
@@ -45,15 +38,28 @@ export default {
         if(response.status === 200 && 'auth_token' in response.data) {
           this.$session.start()
           this.$session.set('auth_token', response.data.auth_token)
-          this.$session.set('listAccount', this.listAccount)
+          this.getAdvertiserEmails()
           this.$loading(false)
           this.$router.push('/campaign-manager')
         }
       }, error => {
         this.$loading(false)
         this.msgErrors = error.response.data.errors
-        document.getElementById('error-msg').className = "alert alert-danger";
+        document.getElementById('error-msg').className = "alert alert-danger"
       });
+    },
+    getAdvertiserEmails() {
+      AdvertiserApi.index(this.$session.get('auth_token')).then(response => {
+        let {data} = response
+        let listAdvertiser = []
+        for (let i = 0; i < data.length; i++) {
+          listAdvertiser.push(data[i].email)
+        }
+        this.$session.set('listAccount', {advertiserEmails: listAdvertiser})
+      }, error => {
+        this.$loading(false)
+        console.log(error)
+      })
     }
   }
 }

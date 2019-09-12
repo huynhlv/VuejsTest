@@ -80,7 +80,7 @@ export default {
       });
     },
     fetchReportAds(namecampaign, nameadgroup) {
-      CampaignApi.getReportAds(namecampaign).then(response => {
+      CampaignApi.getReportAds(namecampaign, nameadgroup).then(response => {
           let arrAllItem = []
           let performance = response.data.performance
           for(let i=0; i<this.dataAds.length; i++){

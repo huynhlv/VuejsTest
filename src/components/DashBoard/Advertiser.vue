@@ -50,6 +50,7 @@
   </div>
 </template>
 <script>
+import AdvertiserApi from '../../api/AdvertiserApi'
 export default {
   created() {
     this.getAccountAdvertiser()
@@ -87,10 +88,17 @@ export default {
     },
     addAccount() {
       if(!this.$refs.form.validate()) return
-      var data = this.getAccountFromLocal()
-      data.unshift(this.emailNew)
-      this.updateListAccount(data)
-      this.$swal("Success!", "Add account success!", "success")
+      this.$loading(true)
+      let objEmail = {email: this.emailNew}
+      AdvertiserApi.create(objEmail, this.$session.get('auth_token')).then(response => {
+        this.$loading(false)
+        let data = this.getAccountFromLocal()
+        data.unshift(this.emailNew)
+        this.updateListAccount(data)
+        this.$swal("Success!", "Add account success!", "success")
+      }, error => {
+        console.log(error)
+      })
     },
     updateListAccount(data) {
       let listAccount = {
@@ -109,10 +117,17 @@ export default {
     },
     deleteItem(item) {
       if (confirm('Are you sure you want to delete this account?')) {
-        var data = this.getAccountFromLocal()
-        data.splice(this.findIndexArr(item), 1)
-        this.updateListAccount(data)
-        this.$swal("Success!", "Delete account success!", "success")
+        this.$loading(true)
+        let objEmail = {email: item}
+        AdvertiserApi.delete(objEmail, this.$session.get('auth_token')).then(response => {
+          this.$loading(false)
+          var data = this.getAccountFromLocal()
+          data.splice(this.findIndexArr(item), 1)
+          this.updateListAccount(data)
+          this.$swal("Success!", "Delete account success!", "success")
+        }, error => {
+          console.log(error)
+        })
       }
     }
   },
