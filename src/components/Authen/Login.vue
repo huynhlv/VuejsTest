@@ -39,8 +39,6 @@ export default {
           this.$session.start()
           this.$session.set('auth_token', response.data.auth_token)
           this.getAdvertiserEmails()
-          this.$loading(false)
-          this.$router.push('/campaign-manager')
         }
       }, error => {
         this.$loading(false)
@@ -56,6 +54,8 @@ export default {
           listAdvertiser.push(data[i].email)
         }
         this.$session.set('listAccount', {advertiserEmails: listAdvertiser})
+        this.$router.push('/campaign-manager')
+        this.$loading(false)
       }, error => {
         this.$loading(false)
         console.log(error)

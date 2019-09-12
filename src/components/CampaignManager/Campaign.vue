@@ -96,12 +96,12 @@ export default {
           var { performance } = response.data
           for(let i=0; i<performance.length; i++)
           {
-            clicks.push(performance[i].total_clicks)
-            views.push(performance[i].total_views)
-            total_25per.push(performance[i].total_25per_completions)
-            total_50per.push(performance[i].total_50per_completions)
-            total_75per.push(performance[i].total_75per_completions)
-            total_100per.push(performance[i].total_100per_completions)
+            clicks.push(parseInt(performance[i].total_clicks))
+            views.push(parseInt(performance[i].total_views))
+            total_25per.push(parseInt(performance[i].total_25per_completions))
+            total_50per.push(parseInt(performance[i].total_50per_completions))
+            total_75per.push(parseInt(performance[i].total_75per_completions))
+            total_100per.push(parseInt(performance[i].total_100per_completions))
             date.push(performance[i].date)
           }
           var series = [
@@ -181,12 +181,6 @@ export default {
         title: {
           text: 'Campaign Peformance'
         },
-        // plotOptions: {
-          // spline: {
-          //   pointInterval: 3600000,
-          //   pointStart: Date.now()
-          // }
-        // },
         series: null,
         xAxis: {
           categories: null
