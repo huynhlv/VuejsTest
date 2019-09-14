@@ -17,7 +17,7 @@
               <b-form-checkbox v-else switch class="not-allow" disabled></b-form-checkbox>
             </template>
             <template slot="creative_preview" slot-scope="data" >
-              <span v-if="data.item.create_type_name != 'Video'">
+              <span v-if="data.item.create_type_name">
                 <clazy-load :src="data.value" :id="'popover' + data.item.id">
                   <button class="b-none">
                     <img class="w-image" :src="data.value">
@@ -87,7 +87,7 @@ export default {
             let performance_index = null
             let performance_current = null
             for(let j=0; j<performance.length; j++){
-              if(this.dataAds[i].name == performance[j].ad_group_name) {
+              if(this.dataAds[i].name == performance[j].ads_name) {
                 performance_index = j
                 break
               }
