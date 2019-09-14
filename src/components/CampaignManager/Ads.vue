@@ -51,6 +51,7 @@
               </span>
             </template>
           </b-table>
+          <div id="no-data">{{ $t('data.no_data') }}</div>
         </div>
       </b-card-text>
     </b-tab>
@@ -100,6 +101,9 @@ export default {
             arrAllItem.push(Object.assign({}, performance_current, this.dataAds[i]))
           }
           this.items = arrAllItem
+          if(arrAllItem.length == 0) {
+            document.getElementById('no-data').style.display = "block"
+          }
         }, error => {
           this.checkDataTable()
           console.log(error)
@@ -115,6 +119,10 @@ export default {
       else {
         myVideo.pause();
       }
+    },
+    checkDataTable() {
+      this.items = []
+      document.getElementById('no-data').style.display = "block"
     },
     backCampaign() {
       this.$router.push('/campaign-manager')
@@ -168,8 +176,7 @@ export default {
         },
         {
           key: 'creative_preview',
-          label: this.$t("campaign.table.creative_preview"),
-          label: 'Creative Preview'
+          label: this.$t("campaign.table.creative_preview")
         },
         {
           key: 'delivery_status',

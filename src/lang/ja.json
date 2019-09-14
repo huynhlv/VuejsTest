@@ -47,6 +47,9 @@
       "budget_type": "予算タイプ",
       "campaign_period_budget": "期間予算",
       "cost_bidding": "費用入札",
+      "ad_group_name": "広告グループ名",
+      "spent": "過ごした",
+      "click_through_rate": "クリックスルー率",
       "std_daily_budget": "一日あたりの予算",
       "std_bidding_amount": "入札額",
       "std_bidding_method_name": "入札名",
@@ -68,7 +71,7 @@
       "total_100per": "合計100per完了",
       "ad_id": "Ad ID",
       "ad_name": "Ad 名",
-      "creative_preview": "クリエイティブプレビュー"
+      "creative_preview": "プレビュー"
     },
     "chart": {
       "highchart": "ハイチャート",

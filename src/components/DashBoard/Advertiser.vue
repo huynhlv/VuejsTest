@@ -147,12 +147,12 @@ export default {
       fields: [
         {
           key: 'email',
-          lable: this.$t("advertiser.email"),
+          label: this.$t("advertiser.email"),
           sortable: true
         },
         {
           key: 'acction',
-          lable: this.$t("advertiser.action"),
+          label: this.$t("advertiser.action"),
           class: 'w-25'
         }
       ],

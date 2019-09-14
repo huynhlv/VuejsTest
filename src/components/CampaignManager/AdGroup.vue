@@ -21,6 +21,7 @@
               </router-link>
             </template>
           </b-table>
+          <div id="no-data">{{ $t('data.no_data') }}</div>
         </div>
       </b-card-text>
     </b-tab>
@@ -72,6 +73,9 @@ export default {
             arrAllItem.push(Object.assign({}, performance_current, this.dataAdgroup[i]))
           }
           this.items = arrAllItem
+          if(arrAllItem.length == 0) {
+            document.getElementById('no-data').style.display = "block"
+          }
         }, error => {
           this.checkDataTable()
           console.log(error)

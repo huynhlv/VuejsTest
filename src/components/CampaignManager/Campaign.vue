@@ -77,6 +77,9 @@ export default {
             arrAllItem.push(Object.assign({}, response.data[i], this.dataCampaign[i]))
           }
           this.items = arrAllItem
+          if(arrAllItem.length == 0) {
+            document.getElementById('no-data').style.display = "block"
+          }
         }, error => {
           this.checkDataTable()
           console.log(error)
