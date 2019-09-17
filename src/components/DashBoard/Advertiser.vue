@@ -98,6 +98,7 @@ export default {
         this.$swal("Success!", "Add account success!", "success")
       }, error => {
         console.log(error)
+        this.$loading(false)
       })
     },
     updateListAccount(data) {
